@@ -1,0 +1,141 @@
+------------------------------------------------------------------------------estructura------------------------------------------------------------------------------------------------
+
+CREATE   TABLE static (
+codigo VARCHAR(20) PRIMARY KEY,
+limPuntos VARCHAR(20),
+puntosxkilo VARCHAR(20),
+obsequio VARCHAR(20)
+);
+
+
+CREATE TABLE usuario(
+nick VARCHAR(20) PRIMARY KEY,
+pasword VARCHAR(20) NOT NULL,
+nombre VARCHAR (20),
+administrador VARCHAR(1) NOT NULL,
+comun VARCHAR(1) NOT NULL
+);
+
+CREATE   TABLE empleado (
+cedula VARCHAR(20) PRIMARY KEY,
+nombre VARCHAR(20) NOT NULL,
+direccion VARCHAR(20) NOT NULL,
+telefono VARCHAR(20) NOT NULL,
+activo VARCHAR (1) NOT NULL,
+inactivo VARCHAR (1) NOT NULL,
+despedido VARCHAR(1) NOT NULL
+);
+
+CREATE   TABLE pago (
+fechahora VARCHAR(20) PRIMARY KEY,
+id_usuario VARCHAR(20) REFERENCES USUARIO(nick) ON DELETE SET NULL,
+id_empleado VARCHAR(20) REFERENCES EMPLEADO(cedula) ON DELETE SET NULL,
+monto VARCHAR (80) NOT NULL
+);
+
+CREATE   TABLE cliente_empresarial(
+telefono VARCHAR(20) PRIMARY KEY,
+nombre VARCHAR(20),
+fecha_registro VARCHAR(20) NOT NULL,
+puntos VARCHAR(20) NOT NULL
+);
+
+CREATE   TABLE productoe (
+codigo VARCHAR(20) PRIMARY KEY,
+nombre VARCHAR (20),
+peso VARCHAR(20) NOT NULL,
+tipo VARCHAR(20) NOT NULL,
+id_clientee VARCHAR(20),
+FOREIGN KEY(id_clientee)REFERENCES CLIENTE_EMPRESARIAL(telefono) 
+);
+
+CREATE   TABLE colore(
+col VARCHAR(20) PRIMARY KEY,
+precio VARCHAR(20) NOT NULL,
+id_productoe VARCHAR(20),
+FOREIGN KEY(id_productoe) REFERENCES productoe(codigo),
+id_clientee VARCHAR(20),
+FOREIGN KEY(id_clientee) REFERENCES productoe(id_clientee) 
+);
+
+CREATE   TABLE pedidoe (
+fecha VARCHAR(20) NOT NULL,
+numero VARCHAR(20) NOT NULL,
+PRIMARY KEY(fecha,numero),
+direccion VARCHAR(20) NOT NULL,
+nota VARCHAR(100),
+precio_total VARCHAR(20) NOT NULL,
+estado VARCHAR(20) NOT NULL,
+id_usuario VARCHAR(20) REFERENCES USUARIO(nick) ON DELETE SET NULL,
+id_empleado VARCHAR(20) REFERENCES EMPLEADO(cedula) ON DELETE SET NULL,
+id_clientee VARCHAR(20) REFERENCES cliente_empresarial(telefono) ON DELETE SET NULL
+);
+
+CREATE   TABLE productoxpedidoe(
+consecutivo VARCHAR(20),
+color VARCHAR(20) NOT NULL,
+precio VARCHAR(20) NOT NULL,
+id_productoe VARCHAR(20) REFERENCES productoe(codigo) ON DELETE SET NULL,
+id_pedidoe_fecha VARCHAR(20)REFERENCES pedidoe(fecha) ON DELETE CASCADE,
+id_pedidoe_numero VARCHAR(20)REFERENCES pedidoe(numero) ON DELETE CASCADE,
+PRIMARY KEY (consecutivo,id_pedidoe_fecha,id_pedidoe_numero)
+);
+
+CREATE   TABLE municipio(
+nombre VARCHAR(80) PRIMARY KEY
+);
+
+CREATE   TABLE cliente_comun(
+telefono VARCHAR (20) PRIMARY KEY,
+nombre VARCHAR(20),
+fecha_registro VARCHAR(20) NOT NULL,
+puntos VARCHAR(20) NOT NULL
+);
+
+CREATE   TABLE productom(
+codigo VARCHAR(20) PRIMARY KEY,
+nombre varchar(20),
+peso VARCHAR(20) NOT NULL,
+tipo VARCHAR(20) NOT NULL,
+id_municipio VARCHAR(20),
+FOREIGN KEY (id_municipio) REFERENCES municipio(nombre)
+);
+
+CREATE   TABLE colorm(
+color VARCHAR(20) PRIMARY KEY,
+precio VARCHAR(20) NOT NULL,
+id_productom VARCHAR(20),
+FOREIGN KEY (id_productom) REFERENCES productom(codigo) 
+);
+
+CREATE   TABLE pedidom(
+fecha VARCHAR(20) NOT NULL,
+numero VARCHAR(20) NOT NULL,
+PRIMARY KEY(fecha,numero),
+direccion VARCHAR(20) NOT NULL,
+nota VARCHAR(100),
+precio_total VARCHAR(20) NOT NULL,
+estado VARCHAR(20) NOT NULL,
+id_usuario VARCHAR(20) REFERENCES USUARIO(nick) ON DELETE SET NULL,
+id_empleado VARCHAR(20) REFERENCES EMPLEADO(cedula) ON DELETE SET NULL,
+id_clientem VARCHAR(20) REFERENCES cliente_comun(telefono) ON DELETE SET NULL
+);
+
+CREATE   TABLE productoxpedidom (
+consecutivo VARCHAR(20),
+color VARCHAR(20) NOT NULL,
+precio VARCHAR(20) NOT NULL,
+id_productom VARCHAR(20) REFERENCES productoem(codigo) ON DELETE SET NULL ,
+id_pedidom_fecha VARCHAR(20) REFERENCES pedidom(fecha) ON DELETE CASCADE,
+id_pedidom_hora VARCHAR(20) REFERENCES pedidom(hora) ON DELETE CASCADE,
+id_pedidom_numero VARCHAR(20) REFERENCES pedidom(numero) ON DELETE CASCADE,
+PRIMARY KEY ( consecutivo,id_pedidom_fecha,id_pedidom_hora)
+);
+
+--------------------------------------------------------------------------------------------------------------insercion-----------------------------------------------------------------------------------------------------
+
+INSERT INTO static(codigo, limPuntos,puntosxkilo,obsequio) VALUES( '1','4320','80','por defecto');
+
+
+
+

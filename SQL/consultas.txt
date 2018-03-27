@@ -1,0 +1,7 @@
+SELECT codigo,nombre,peso,precio,puntos FROM productoxpedido WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido) AND telefono LIKE "+telefono+"
+
+SELECT codigo,nombre,peso,precio,puntos FROM (SELECT * FROM productoxpedido INNER JOIN producto ON productoxpedido.codigo = producto.codigo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido) AND telefono LIKE "+telefono+"
+
+SELECT codigo,nombre,peso,precio,puntos FROM (SELECT * FROM productoxpedido,producto WHERE productoxpedido.codigo = producto.codigo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido) AND telefono LIKE "+telefono+"
+
+SELECT producto.codigo,nombre,peso,precio,puntos FROM productoxpedido INNER JOIN producto ON productoxpedido.codigo = producto.codigo AND fecha LIKE '5-2-18' AND numero LIKE '2'
