@@ -3,7 +3,8 @@ CREATE   TABLE static (
 codigo VARCHAR(20) PRIMARY KEY,
 limPuntos VARCHAR(20),
 puntosxkilo VARCHAR(20),
-obsequio VARCHAR(20)
+obsequio VARCHAR (80),
+puntos_descontados_por_obsequio VARCHAR(80)
 );
 
 CREATE TABLE usuario(
