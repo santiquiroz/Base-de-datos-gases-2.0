@@ -133,6 +133,9 @@ public class Pedido extends View implements IView{
             
             jTextField14.setText(ultimoCondonado);
             
+            jTextField16.setText(ultimoPuntos);
+            
+            jTextField
             
             db=new DataBase();
             //obteniendo productos que compro la ultima vez

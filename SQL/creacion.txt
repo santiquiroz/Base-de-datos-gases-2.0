@@ -77,7 +77,9 @@ id_cliente VARCHAR(20) REFERENCES CLIENTE(telefono) ON DELETE SET NULL,
 tipo VARCHAR(20),
 id_municipio VARCHAR(80),
 condonado VARCHAR(80),
-puntos VARCHAR (80)	
+puntos VARCHAR (80),
+obsequio VARCHAR (80),
+puntos_descontados_por_obsequio	VARCHAR(80)
 );
 
 CREATE   TABLE productoexpedido(
@@ -124,4 +126,4 @@ PRIMARY KEY ( consecutivo,id_pedido_fecha,id_pedido_numero)
 
 
 ------------------------------------------------------insercion-------------------------------------------------------------
-INSERT INTO static(codigo, limPuntos,puntosxkilo,obsequio) VALUES( '1','4320','80','');
+INSERT INTO static(codigo, limPuntos,puntosxkilo,obsequio,puntos_descontados_por_obsequio) VALUES( '1','4320','80','','4320');
