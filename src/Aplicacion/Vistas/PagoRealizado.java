@@ -20,10 +20,11 @@ import javax.swing.JOptionPane;
  */
 public class PagoRealizado extends View implements IView{
     DataBase db = new DataBase();
-    public PagoRealizado(String cedula, String cantidad, String fecha, String hora) {
+    public PagoRealizado(String cedula, String cantidad, String fechahora) {
         initComponents();
         
-        jTextArea1.setText(" Se le ha pagado \n "+cantidad+" pesos al empleado \n con la cedula "+cedula+" \n en el dia "+ new Fecha().toString("D/M/A")+", a las "+ new Fecha().toString("h:m:s"));
+        String[] sep = fechahora.split(" ");
+        jTextArea1.setText(" Se le ha pagado \n "+cantidad+" pesos al empleado \n con la cedula "+cedula+" \n en el dia "+ sep[0]+", a las "+ sep[1]);
         
         
         setVisible(true);

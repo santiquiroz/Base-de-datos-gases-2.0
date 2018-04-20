@@ -18,25 +18,42 @@ import javax.swing.JOptionPane;
 
 /**
  * Frame de creacion cliente nuevo
- * @author santiquiroz e isamelTheMemeMaster
+ * @author santiquiroz 
  * @version 0.8.1
  * @since JConexionDB 1.0
  */
-public class ClienteNuevo extends View implements IView{
+public class InfoCliente extends View implements IView{
     
     DataBase db = new DataBase();
-    String usuario;
+    String usuario,telefono,nombre,fecha_registro,puntos,empresarial,comun,id_municipio;
     
-    public ClienteNuevo(String telefono, String user) {  
+    public InfoCliente(ArrayList datoscliente, String user) {  
         usuario=user;
+        telefono= (String) ((ArrayList) datoscliente .get(0)).get(0);
+        nombre=(String) ((ArrayList) datoscliente .get(0)).get(1);
+        fecha_registro=(String) ((ArrayList) datoscliente .get(0)).get(2);
+        puntos=(String) ((ArrayList) datoscliente .get(0)).get(3);
+        empresarial=(String) ((ArrayList) datoscliente .get(0)).get(4);
+        comun=(String) ((ArrayList) datoscliente .get(0)).get(5);
+        id_municipio=(String) ((ArrayList) datoscliente .get(0)).get(6);
         initComponents();
         this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         jTextField1.setText(telefono);       
-        jTextField3.setText(new Fecha().toString("A-M-D"));
+        jTextField2.setText(nombre);
+        jTextField3.setText(fecha_registro);
+        if(comun.equals("1")){
+            jComboBox1.setSelectedIndex(0);
+        }
+        else{
+            jComboBox1.setSelectedIndex(1);
+        }
+        jTextField4.setText(puntos);
+        
         setVisible(true);
-        setTitle("Cliente nuevo");
+        setTitle("Info cliente");
         setLocationRelativeTo(null);
         this.setResizable(false);
+        
         db= new DataBase();
         ArrayList municipios = db.excecuteQuery("SELECT nombre FROM municipio");
         
@@ -47,6 +64,7 @@ public class ClienteNuevo extends View implements IView{
         }
         
         jComboBox2.setModel(modeloCombo);
+        jComboBox2.setSelectedItem(id_municipio);
     }
     
     @SuppressWarnings("unchecked")
@@ -73,16 +91,16 @@ public class ClienteNuevo extends View implements IView{
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("REGISTRAR UN CLIENTE");
+        jLabel2.setText("INFORMACION DEL CLIENTE");
 
-        jButton1.setText("Cancelar");
+        jButton1.setText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Registrar");
+        jButton2.setText("Continuar con un nuevo pedido");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -115,11 +133,12 @@ public class ClienteNuevo extends View implements IView{
         jTextField4.setEditable(false);
         jTextField4.setText("0");
 
-        jLabel6.setText("Tipo de cliente");
+        jLabel6.setText("Tipo de usuario");
 
         jLabel7.setText("Municipio");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "comun" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "comun", "empresarial" }));
+        jComboBox1.setEnabled(false);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -128,35 +147,30 @@ public class ClienteNuevo extends View implements IView{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(183, 183, 183)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(99, 99, 99)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4)
-                                .addComponent(jButton1))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addGap(62, 62, 62))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextField3)
+                        .addComponent(jTextField4)
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField2))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(502, 502, 502))
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(97, 97, 97)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,31 +216,13 @@ public class ClienteNuevo extends View implements IView{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        boolean b1 = IO.textfield_requerido(jTextField1, jTextField3, jTextField4);
-        
-        if (b1){
-            String telefono=jTextField1.getText();
-            String nombre=jTextField2.getText();
-            String fecha=jTextField3.getText();
-            String puntos=jTextField4.getText();
-            String comun, empresarial;
-            if (jComboBox1.getSelectedItem().equals("comun")) {
-                comun = "1";empresarial="0";
-            }
-            else{
-                comun = "0";empresarial="1";
-            }
-            if (comun.equals("1")){     
-                db.insertar3("INSERT INTO cliente (telefono,nombre,fecha_registro,puntos,empresarial,comun,id_municipio) VALUES ('"+telefono+"','"+nombre+"',CURRENT_DATE(),'0','1','0','"+jComboBox2.getSelectedItem()+"')");    
-            }
-           
-            new Pedido(telefono,usuario);
-            this.dispose();
-            
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Llene todos los campos");
-        }
+        String nombre=jTextField2.getText();
+        String nuevomunicipio = (String) jComboBox2.getSelectedItem();
+        db=new DataBase();
+        db.actualizar("UPDATE cliente SET nombre = '"+nombre+"', id_municipio = '"+nuevomunicipio+"' WHERE telefono = '"+this.telefono+"'");
+        this.dispose();    
+        new Pedido(telefono,usuario);
+             
     }//GEN-LAST:event_jButton2ActionPerformed
 
     

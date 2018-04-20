@@ -24,17 +24,15 @@ public class EditarEmpleado extends View implements IView{
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cedula=puntero;
-        
-        DataBase db = new DataBase();
+        db = new DataBase();
         Map<String,String> map = new HashMap();
         map.put("cedula",cedula);
         db.getWhereEquals("empleado",map,null);
         jTextField1.setText(cedula);
         jTextField1.setEditable(false);
-        
-        nickUsuario= db.getDato(0,1);
         jTextField2.setText(db.getDato(0,1));
-        jTextField3.setText(db.getDato(0,2));
+        jTextField3.setText(db.getDato(0,3));
+        jTextField4.setText(db.getDato(0,2));
         
         this.nickUsuario=nickUsuario;
         setVisible(true);
@@ -56,6 +54,8 @@ public class EditarEmpleado extends View implements IView{
         jButton14 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,7 +86,7 @@ public class EditarEmpleado extends View implements IView{
             }
         });
 
-        jLabel41.setText("Telefono");
+        jLabel41.setText("Direccion");
 
         jButton14.setText("Editar");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
@@ -104,35 +104,33 @@ public class EditarEmpleado extends View implements IView{
 
         jLabel18.setText("Tipo");
 
+        jLabel42.setText("Telefono");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton14)
-                .addGap(100, 100, 100))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButton6)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel32)
-                                    .addComponent(jLabel39)
-                                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(106, 106, 106))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addGap(144, 144, 144)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel39)
+                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jToggleButton6))
+                .addGap(106, 106, 106)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton14)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55))
         );
         layout.setVerticalGroup(
@@ -140,7 +138,7 @@ public class EditarEmpleado extends View implements IView{
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -150,16 +148,20 @@ public class EditarEmpleado extends View implements IView{
                     .addComponent(jLabel39))
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel41)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel42))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
-                .addGap(25, 25, 25)
-                .addComponent(jButton14)
-                .addGap(28, 28, 28)
-                .addComponent(jToggleButton6)
+                    .addComponent(jLabel41)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jToggleButton6)
+                    .addComponent(jButton14))
                 .addGap(28, 28, 28))
         );
 
@@ -190,39 +192,25 @@ public class EditarEmpleado extends View implements IView{
             
             String nombre=jTextField2.getText();
             String telefono=jTextField3.getText();
-            
-            
-            Map<String,String> map = new HashMap();
-
-            //map.put("nick", nick);
-            map.put("nombre", nombre);
-            map.put("telefono", telefono);
+            String direccion =  jTextField4.getText();
+            String activo="0";
+            String inactivo="0";
+            String despedido="0";
             
             if(jComboBox1.getSelectedItem().equals("Activo")){
-                map.put("activo", "1");
-                map.put("inactivo", "0");
-                map.put("despedido", "0");
+                activo="1";
                 
             }
             else if(jComboBox1.getSelectedItem().equals("Inactivo")){
-                map.put("activo", "0");
-                map.put("inactivo", "1");
-                map.put("despedido", "0");
+                inactivo="1";
                 
             }
             else{
-                map.put("activo", "0");
-                map.put("inactivo", "0");
-                map.put("despedido", "1");
+                despedido="1";
             }
             
-            
-            String[] arrayNick = new String[2];
-            arrayNick[0]="cedula";
-            arrayNick[1]=cedula;
-            db.update("empleado", map, arrayNick);
-            //db.actualizar("UPDATE usuario SET nombre=`"+nombreN+"`, password=`"+passwordN+"`WHERE (nick=`"+nickN+"`)");
-            //db.excecuteQuery("UPDATE usuario SET nombre=`"+nombreN+"`, password=`"+passwordN+"`WHERE (nick=`"+nickN+"`)");
+            db.actualizar("UPDATE empleado SET direccion = '"+direccion+"' , telefono = '"+telefono+"' , nombre = '"+nombre+"' , inactivo = '"+inactivo+"' , activo = '"+activo+"', despedido = '"+despedido+"' WHERE cedula = '"+cedula+"'");
+            this.dispose();
                        
         
         
@@ -240,9 +228,11 @@ public class EditarEmpleado extends View implements IView{
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JToggleButton jToggleButton6;
     // End of variables declaration//GEN-END:variables
 

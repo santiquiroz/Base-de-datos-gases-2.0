@@ -181,7 +181,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tipo de usuario"/>
+        <Property name="text" type="java.lang.String" value="Tipo de cliente"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -192,9 +192,8 @@
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
+          <StringArray count="1">
             <StringItem index="0" value="comun"/>
-            <StringItem index="1" value="empresarial"/>
           </StringArray>
         </Property>
       </Properties>

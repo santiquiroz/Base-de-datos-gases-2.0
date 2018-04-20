@@ -1666,15 +1666,23 @@ public class Administrador extends View implements IView{
         
         if (b1){
             String telefono= jTextField4.getText();
-            Map<String,String> map = new HashMap();
-            map.put("telefono",telefono);
-            db.getWhereEquals("cliente", map, null);
-            int tipo = 1;
-            if(db.isEmpty()){
+            ArrayList datoscliente;
+            boolean encontrado = false;
+            //buscando si es un cliente comun
+            db = new DataBase();
+            datoscliente = db.excecuteQuery("SELECT * FROM cliente WHERE(telefono = '"+telefono+"')");
+            if (!db.isEmpty()){
+                encontrado = true;
+            }
+            else{
+               encontrado = false;
+            }
+            if(encontrado == false){
                 new ClienteNuevo(telefono,this.nickUsuario);
             }
             else{
-                new Pedido(telefono,this.nickUsuario);
+                //new Pedido(telefono,this.nickUsuario);
+                new InfoCliente(datoscliente,this.nickUsuario);
             }
         }
         else{
@@ -2296,29 +2304,11 @@ public class Administrador extends View implements IView{
         boolean b1 = IO.textfield_requerido(jTextField11,jTextField10);
 
         if(b1){
-
-            String fecha = new Fecha().toString("A/M/D");
-            String hora = new Fecha().toString("h:m:s");
-            String fechayhora = (fecha+"-"+hora);
             String cedula= jTextField11.getText();
             String cantidad= jTextField10.getText();
-
-            Map<String,String> map = new HashMap();
-            map.put("fechayhora",fechayhora);
-            map.put("cantidad",cantidad);
-            map.put("cedula",cedula);
-            map.put("nick",nickUsuario2);
             db = new DataBase();
-            if(db.insertar("pago",map)){
-                new PagoRealizado(cedula, cantidad, fecha, hora);
-
-                jTextField11.setText("");
-                jTextField10.setText("");
-
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Error al insertar");
-            }
+            db.insertar3("INSERT INTO pago (fechahora,id_usuario,id_empleado,monto) VALUES ((SELECT now()),'"+this.nickUsuario2+"', '"+cedula+"', '"+cantidad+"')");
+           
         }
         else{
             JOptionPane.showMessageDialog(null, "Llene todos los campos");

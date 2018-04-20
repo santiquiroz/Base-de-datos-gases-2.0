@@ -34,22 +34,25 @@ import javax.swing.SwingUtilities;
 public class Pedido extends View implements IView{
    DataBase db = new DataBase();
    Fecha fecha = new Fecha();
-   String usuario,telefono;
-   public String today;
+   String usuario,telefono,nombre,fechaRegistro,puntos,empresarial,comun,idMunicipio;
+   String ultimoFecha,ultimoNumero,ultimoDireccion,ultimoNota,ultimoPrecioTotal,ultimoEstado,ultimoIdUsuario,ultimoIdEmpleado,ultimoIdCliente,ultimoTipo,ultimoIdMunicipio;
+   public String today,ultimoCondonado,ultimoPuntos;
    public ArrayList productos;
    public ArrayList productosv;
    public LinkedList productosInsercion;
-   public ArrayList ultimo1,vliente; 
+   public ArrayList ultimosPedidos,ultimoPedido,datosCliente; 
         JInternalFrame frame = new JInternalFrame("pedido viejo");
         JInternalFrame frame2 = new JInternalFrame("pedido nuevo");
         JInternalFrame frame3 = new JInternalFrame("product");
    
-    public Pedido(String telefono,String usrer) {
+    public Pedido(String telefono,String q) {
         productos = new ArrayList();
         productosInsercion = new LinkedList();
         productosv = new ArrayList();
+        ultimosPedidos=new ArrayList();
+        
         this.telefono=telefono;
-        usuario=usrer;
+        usuario=q;
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
@@ -74,58 +77,61 @@ public class Pedido extends View implements IView{
     }
     
     public void llenar(String telefono){
+        //obteniendo datos del cliente
        db=new DataBase();
-            
-            vliente = db.excecuteQuery("SELECT * FROM cliente WHERE telefono="+ telefono);
-        db = new DataBase();
-        //ultimo pedido
-         ultimo1 = db.excecuteQuery("SELECT * FROM pedido WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido) AND telefono LIKE "+telefono);
-        
-        
-        
-        //llenando pedido viejo
+       datosCliente = db.excecuteQuery("SELECT * FROM cliente WHERE telefono='"+ telefono+"'");
+       nombre=db.getDato(0,1);
+       fechaRegistro=db.getDato(0,2);
+       puntos=db.getDato(0,3);
+       empresarial=db.getDato(0,4);
+       comun=db.getDato(0,5);
+       idMunicipio=db.getDato(0,6);
+       db = new DataBase();
+       //obteniendo el ultimo pedido que realizo el cliente con su rol de empresarial o comun
+       if(comun.equals("1")){
+           ultimosPedidos = db.excecuteQuery("SELECT * FROM (SELECT * FROM pedido WHERE(tipo = 'comun' AND AND telefono LIKE '"+telefono+"') pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido)");
+       }
+       else{
+           ultimosPedidos = db.excecuteQuery("SELECT * FROM (SELECT * FROM pedido WHERE(tipo = 'empresarial' AND AND telefono LIKE '"+telefono+"') pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido)");
+       }
+       
+        //llenando pedido viejo en la interfaz grafica
         if(!db.isEmpty()){
-            int ui = ultimo1.size()-1;
-            ArrayList hola =  (ArrayList) ultimo1.get(ui);
-            System.out.println(hola);
+            int ui = ultimosPedidos.size()-1;
+            ArrayList ultimoPedido =  (ArrayList) ultimosPedidos.get(ui);
+            ultimoFecha=(String) ultimoPedido.get(0);
+            ultimoNumero=(String) ultimoPedido.get(1);
+            ultimoDireccion=(String) ultimoPedido.get(2);
+            ultimoNota=(String) ultimoPedido.get(3);
+            ultimoPrecioTotal=(String) ultimoPedido.get(4);
+            ultimoEstado=(String) ultimoPedido.get(5);
+            ultimoIdUsuario=(String) ultimoPedido.get(6);
+            ultimoIdEmpleado=(String) ultimoPedido.get(7);
+            ultimoIdCliente=(String) ultimoPedido.get(8);
+            ultimoTipo=(String) ultimoPedido.get(9);
+            ultimoIdMunicipio = (String) ultimoPedido.get(10);
+            ultimoCondonado = (String) ultimoPedido.get(11);
+            ultimoPuntos = (String) ultimoPedido.get(12);
             
-            int eso = vliente.size()-1;
-            ArrayList newvliente =  (ArrayList) vliente.get(eso);
+            jTextField1.setText(ultimoFecha);
             
-            System.out.println(vliente);
+            jTextField2.setText(ultimoNumero);
             
-            jTextField1.setText((String) hola.get(0));
+            jTextField3.setText(ultimoDireccion);
             
-            jTextField2.setText((String) hola.get(1));
+            jTextArea1.setText(ultimoNota);
             
-            jTextField3.setText((String) hola.get(2));
+            jTextField4.setText(ultimoIdMunicipio);
             
-            jTextField6.setText((String) hola.get(2));
+            jTextField11.setText(ultimoIdCliente);
             
-            //puntos que tenia la ultima vez
-            jTextField16.setText((String) hola.get(4));
+            jTextField9.setText(ultimoIdEmpleado);
             
-            jTextArea1.setText((String) hola.get(7));
-            jTextArea2.setText((String) hola.get(7));
+            jTextField23.setText(ultimoIdUsuario);
             
-            jTextField4.setText((String) newvliente.get(6));
+            jTextField13.setText((Float.parseFloat(ultimoPrecioTotal)+(Float.parseFloat(ultimoCondonado))));
             
-            jTextField10.setText((String) hola.get(4));
-            jTextField11.setText((String) hola.get(4));
-            
-            jTextField9.setText((String) hola.get(3));
-            
-            jTextField13.setText((String) hola.get(8));
-            
-            jTextField14.setText((String) hola.get(5));
-            
-            jTextField15.setText((String) hola.get(6));
-            
-            jTextField17.setText("0");
-            jTextField20.setText("0");
-            jTextField22.setText("0");
-            
-            jTextField21.setText((String) hola.get(9));
+            jTextField14.setText(ultimoCondonado);
             
             
             db=new DataBase();
@@ -898,7 +904,7 @@ public class Pedido extends View implements IView{
                                     .addComponent(jComboBox2, 0, 273, Short.MAX_VALUE)
                                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(123, 123, 123)
-                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
