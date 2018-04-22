@@ -224,9 +224,18 @@ public class InfoCliente extends View implements IView{
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String nombre=jTextField2.getText();
+        String tipoCliente = (String) jComboBox1.getSelectedItem();
         String nuevomunicipio = (String) jComboBox2.getSelectedItem();
+        String emp="0";
+        String com="0";
+        if(tipoCliente.equals("empresarial")){
+            emp="1";
+        }
+        else{
+            com="1";
+        }
         db=new DataBase();
-        db.actualizar("UPDATE cliente SET nombre = '"+nombre+"', id_municipio = '"+nuevomunicipio+"' WHERE telefono = '"+this.telefono+"'");
+        db.actualizar("UPDATE cliente SET nombre = '"+nombre+"', id_municipio = '"+nuevomunicipio+"', empresarial='"+emp+"',comun = '"+com+"' WHERE telefono = '"+this.telefono+"'");
         this.dispose();    
         new Pedido(telefono,usuario);
              
