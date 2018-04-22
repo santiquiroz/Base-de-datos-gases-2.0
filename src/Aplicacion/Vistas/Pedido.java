@@ -37,6 +37,7 @@ public class Pedido extends View implements IView{
    String usuario,telefono,nombre,fechaRegistro,puntos,empresarial,comun,idMunicipio;
    String ultimoFecha,ultimoNumero,ultimoDireccion,ultimoNota,ultimoPrecioTotal,ultimoEstado,ultimoIdUsuario,ultimoIdEmpleado,ultimoIdCliente,ultimoTipo,ultimoIdMunicipio;
    String[] cabecera;
+   SimpleTableDemo productoSQL;
    public String today,ultimoCondonado,ultimoPuntos;
    public ArrayList productos;
    public ArrayList ultimoProductos;
@@ -48,6 +49,7 @@ public class Pedido extends View implements IView{
     private String ultimoObsequio;
     private String ultimoPuntosDescontadosPorObsequio;
     private ArrayList productosconsulta;
+    private ArrayList busquedaProductos;
    
     public Pedido(String telefono,String q) {
         productos = new ArrayList();
@@ -275,16 +277,17 @@ public class Pedido extends View implements IView{
         else{
             productosconsulta = db.excecuteQuery("SELECT codigo,nombre,peso,tipo FROM productoe WHERE id_cliente = '"+telefono+"'");
         }
-        
-            int f = productosconsulta.size()-1;
-            ArrayList newproductos =  (ArrayList) productosconsulta.get(f);
-            cabecera= new String[6];
+        cabecera= new String[4];
             cabecera[0]="codigo";
             cabecera[1]="nombre";
             cabecera[2]="peso";
             cabecera[3]="tipo";
-            cabecera[4]="descripcion";
-            SimpleTableDemo productoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(productosconsulta,6).result(),"productos","Carrito",this,"todaLaFila");
+        if(!db.isEmpty()){
+            productoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(productosconsulta,4).result(),"productos","Carrito",this,"todaLaFila");
+        }
+        else{
+            productoSQL= new SimpleTableDemo(cabecera,new Object [0][4],"productos","Carrito",this,"todaLaFila");
+        }
             productoslayout.add( frame3 );
             SimpleTableDemo newContentPaneproducto = new SimpleTableDemo();
             newContentPaneproducto.enable(false);
@@ -365,10 +368,6 @@ public class Pedido extends View implements IView{
         jTextField30 = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
-        jLabel43 = new javax.swing.JLabel();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jLabel44 = new javax.swing.JLabel();
-        jTextField31 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
         jTextField23 = new javax.swing.JTextField();
@@ -496,6 +495,7 @@ public class Pedido extends View implements IView{
         jLabel14.setText("Empleado");
 
         jButton4.setText("Descontar %");
+        jButton4.setEnabled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -503,6 +503,7 @@ public class Pedido extends View implements IView{
         });
 
         jButton5.setText("Obsequiar");
+        jButton5.setEnabled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -702,23 +703,6 @@ public class Pedido extends View implements IView{
             }
         });
 
-        jLabel43.setText("Disponible");
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Desconocido", "Disponible", "No Disponible" }));
-        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox7ActionPerformed(evt);
-            }
-        });
-
-        jLabel44.setText("Precio Base");
-
-        jTextField31.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField31KeyPressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -726,33 +710,20 @@ public class Pedido extends View implements IView{
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel43)
-                        .addGap(100, 100, 100)
-                        .addComponent(jComboBox7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel42)
-                            .addComponent(jLabel37)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel41)
-                            .addComponent(jLabel44))
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                                .addGap(92, 92, 92)
-                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel16Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jTextField31)
-                                            .addComponent(jTextField30)
-                                            .addComponent(jTextField26, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jComboBox5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                                .addGap(95, 95, 95)
-                                .addComponent(jButton12)
-                                .addGap(117, 117, 117)))))
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel37)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel41))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jTextField30)
+                        .addComponent(jTextField26, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextField25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                        .addComponent(jButton12)
+                        .addGap(117, 117, 117))
+                    .addComponent(jComboBox5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(220, 220, 220))
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
@@ -776,19 +747,11 @@ public class Pedido extends View implements IView{
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel41)
                     .addComponent(jTextField30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel44)
-                    .addComponent(jTextField31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(51, 51, 51)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel42)
                     .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel43)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
+                .addGap(80, 80, 80)
                 .addComponent(jButton12)
                 .addContainerGap(94, Short.MAX_VALUE))
         );
@@ -949,7 +912,7 @@ public class Pedido extends View implements IView{
                                     .addComponent(jComboBox2, 0, 273, Short.MAX_VALUE)
                                     .addComponent(jTextField12))))
                         .addGap(123, 123, 123)
-                        .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 620, Short.MAX_VALUE)
+                        .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
@@ -1282,30 +1245,24 @@ public class Pedido extends View implements IView{
                 cabecera[1]="nombre";
                 cabecera[2]="peso";
                 cabecera[3]="tipo";
-                cabecera[4]="descripcion";
-                cabecera[6]="disponible";
         boolean b1 = IO.textfield_requerido(jTextField25);//codigo
         boolean b2 = IO.textfield_requerido(jTextField26);//nombre
         boolean b3 = IO.textfield_requerido(jTextField30);//peso
-        boolean b4 = IO.textfield_requerido(jTextField31);//preciobase
         boolean b5 = !(((String)jComboBox5.getSelectedItem())).equals("Desconocido");//tipo
-        boolean b6 = !(((String)jComboBox7.getSelectedItem())).equals("Desconocido");//disponible
         
-        if(b1==true || b2==true || b3==true || b4==true || b5==true || b6==true){
+        if(b1==true || b2==true || b3==true ||b5==true){
             db=new DataBase();
-            String disponibilidad = (String)jComboBox7.getSelectedItem();
-            if(disponibilidad.equals("Disponible")){
-                disponibilidad="1";
+            if(comun.equals("1")){
+                busquedaProductos=db.excecuteQuery("SELECT codigo, nombre, peso,tipo FROM (SELECT * FROM productom WHERE id_municipio ='"+idMunicipio+"') WHERE (codigo = '"+jTextField25.getText()+"' OR nombre = '"+jTextField26+"' OR tipo = '"+((String)jComboBox5.getSelectedItem())+"'");
             }
-            else if(disponibilidad.equals("No disponible")){
-                disponibilidad="0";
+            else{
+                busquedaProductos=db.excecuteQuery("SELECT codigo, nombre, peso,tipo FROM (SELECT * FROM productoe WHERE id_cliente ='"+telefono+"') WHERE (codigo = '"+jTextField25.getText()+"' OR nombre = '"+jTextField26+"' OR tipo = '"+((String)jComboBox5.getSelectedItem())+"'");;
             }
-            ArrayList datos = db.excecuteQuery("SELECT * FROM producto WHERE codigo='"+jTextField25.getText()+"' OR nombre='"+jTextField26.getText()+"' OR peso='"+jTextField30.getText()+"' OR precioBase ='"+jTextField31.getText()+"' OR tipo='"+(String)jComboBox5.getSelectedItem()+"' OR disponible='"+disponibilidad+"'");
             if(db.isEmpty()){
                 JOptionPane.showMessageDialog(null, "No existe un producto con esas caracteristicas");
             }
             else{
-                SimpleTableDemo productoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(datos,7).result(),"productos","Carrito",this,"todaLaFila");
+                SimpleTableDemo productoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(busquedaProductos,4).result(),"productos","Carrito",this,"todaLaFila");
                 productoslayout.add( frame3 );
                 SimpleTableDemo newContentPaneproducto = new SimpleTableDemo();
                 newContentPaneproducto.enable(false);
@@ -1319,12 +1276,18 @@ public class Pedido extends View implements IView{
         }
         else{
             db=new DataBase();
-            ArrayList datos =db.excecuteQuery("SELECT * FROM producto");
+            db=new DataBase();
+            if(comun.equals("1")){
+                busquedaProductos=db.excecuteQuery("SELECT codigo, nombre, peso,tipo FROM productom WHERE id_municipio ='"+idMunicipio+"'");
+            }
+            else{
+                busquedaProductos=db.excecuteQuery("SELECT codigo, nombre, peso,tipo FROM productoe WHERE id_cliente ='"+telefono+"'");
+            }
             if(db.isEmpty()){
                 JOptionPane.showMessageDialog(null,"No existen productos registrados");
             }
             else{
-                SimpleTableDemo productoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(datos,7).result(),"productos","Carrito",this,"todaLaFila");
+                SimpleTableDemo productoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(busquedaProductos,7).result(),"productos","Carrito",this,"todaLaFila");
                 productoslayout.add( frame3 );
                 SimpleTableDemo newContentPaneproducto = new SimpleTableDemo();
                 newContentPaneproducto.enable(false);
@@ -1352,14 +1315,6 @@ public class Pedido extends View implements IView{
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox5ActionPerformed
 
-    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox7ActionPerformed
-
-    private void jTextField31KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField31KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField31KeyPressed
-
     private void jTextField23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField23ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField23ActionPerformed
@@ -1373,11 +1328,11 @@ public class Pedido extends View implements IView{
     }//GEN-LAST:event_jTextField27ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        jTextField19.setText("0");
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+       jTextField18.setText("0");
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jTextField28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField28ActionPerformed
@@ -1404,7 +1359,6 @@ public class Pedido extends View implements IView{
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1434,8 +1388,6 @@ public class Pedido extends View implements IView{
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1470,7 +1422,6 @@ public class Pedido extends View implements IView{
     private javax.swing.JTextField jTextField29;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField30;
-    private javax.swing.JTextField jTextField31;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
