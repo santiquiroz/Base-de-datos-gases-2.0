@@ -47,22 +47,21 @@ id_municipio VARCHAR(80) REFERENCES municipio(nombre) ON DELETE SET NULL
 );
 
 CREATE   TABLE productoe (
-codigo VARCHAR(20) PRIMARY KEY,
+codigo VARCHAR(20),
 nombre VARCHAR (20),
 peso VARCHAR(20) NOT NULL,
 tipo VARCHAR(20) NOT NULL,
-id_cliente VARCHAR(20),
-FOREIGN KEY(id_cliente)REFERENCES CLIENTE(telefono) 
+id_cliente VARCHAR(20)REFERENCES CLIENTE(telefono),
+PRIMARY KEY (codigo,id_cliente)
 );
 
 CREATE   TABLE colore(
-color VARCHAR(20) PRIMARY KEY,
+color VARCHAR(20),
 precio VARCHAR(20) NOT NULL,
 disponible VARCHAR (1),
-id_productoe VARCHAR(20),
-FOREIGN KEY(id_productoe) REFERENCES productoe(codigo),
-id_cliente VARCHAR(20),
-FOREIGN KEY(id_cliente) REFERENCES productoe(id_cliente) 
+id_productoe_codigo VARCHAR(20) REFERENCES productoe(codigo),
+id_productoe_id_cliente VARCHAR(20) REFERENCES productoe(id_cliente),
+PRIMARY KEY(color,id_productoe_codigo,id_productoe_id_cliente) 
 );
 
 CREATE   TABLE pedido (
@@ -91,27 +90,29 @@ color VARCHAR(20) NOT NULL,
 peso VARCHAR (20) NOT NULL,
 precio VARCHAR(20) NOT NULL,
 puntos VARCHAR (20) NOT NULL,
-id_productoe VARCHAR(20) REFERENCES productoe(codigo) ON DELETE SET NULL,
+id_productoe_codigo VARCHAR(20) REFERENCES productoe(codigo),
+id_productoe_id_cliente VARCHAR(20) REFERENCES productoe(id_cliente),
 id_pedido_fecha VARCHAR(20)REFERENCES pedido(fecha) ON DELETE CASCADE,
 id_pedido_numero VARCHAR(20)REFERENCES pedido(numero) ON DELETE CASCADE,
 PRIMARY KEY (consecutivo,id_pedido_fecha,id_pedido_numero)
 );
 
 CREATE   TABLE productom(
-codigo VARCHAR(20) PRIMARY KEY,
+codigo VARCHAR(20),
 nombre varchar(20),
 peso VARCHAR(20) NOT NULL,
 tipo VARCHAR(20) NOT NULL,
-id_municipio VARCHAR(80),
-FOREIGN KEY (id_municipio) REFERENCES municipio(nombre)
+id_municipio VARCHAR(80) REFERENCES municipio(nombre),
+PRIMARY KEY (id_municipio,codigo)
 );
 
 CREATE   TABLE colorm(
-color VARCHAR(20) PRIMARY KEY,
+color VARCHAR(20),
 precio VARCHAR(20) NOT NULL,
 disponible VARCHAR (1),
-id_productom VARCHAR(20),
-FOREIGN KEY (id_productom) REFERENCES productom(codigo) 
+id_productom_codigo VARCHAR(20) REFERENCES productom(codigo),
+id_productom_id_municipio VARCHAR(20) REFERENCES productom(id_municipio),
+PRIMARY KEY (id_productom_id_municipio,id_productom_codigo,color)
 );
 
 CREATE   TABLE productomxpedido (
@@ -121,7 +122,8 @@ color VARCHAR(20) NOT NULL,
 peso VARCHAR (20) NOT NULL,
 precio VARCHAR(20) NOT NULL,
 puntos VARCHAR (20) NOT NULL,
-id_productom VARCHAR(20) REFERENCES productoem(codigo) ON DELETE SET NULL ,
+id_productom_codigo VARCHAR(20) REFERENCES productom(codigo),
+id_productom_id_municipio VARCHAR(20) REFERENCES productom(id_municipio),
 id_pedido_fecha VARCHAR(20) REFERENCES pedido(fecha) ON DELETE CASCADE,
 id_pedido_numero VARCHAR(20) REFERENCES pedido(numero) ON DELETE CASCADE,
 PRIMARY KEY ( consecutivo,id_pedido_fecha,id_pedido_numero)

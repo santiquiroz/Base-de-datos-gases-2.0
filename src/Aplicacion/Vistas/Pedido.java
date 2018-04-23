@@ -97,10 +97,10 @@ public class Pedido extends View implements IView{
        db = new DataBase();
        //obteniendo el ultimo pedido que realizo el cliente con su rol de empresarial o comun
        if(comun.equals("1")){
-           ultimosPedidos = db.excecuteQuery("SELECT * FROM (SELECT * FROM pedido WHERE(tipo = 'comun' AND AND telefono LIKE '"+telefono+"') pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido)");
+           ultimosPedidos = db.excecuteQuery("SELECT * FROM ((SELECT * FROM pedido WHERE(tipo = 'comun' AND id_cliente LIKE '"+telefono+"')) AS pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido)");
        }
        else{
-           ultimosPedidos = db.excecuteQuery("SELECT * FROM (SELECT * FROM pedido WHERE(tipo = 'empresarial' AND AND telefono LIKE '"+telefono+"') pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido)");
+           ultimosPedidos = db.excecuteQuery("SELECT * FROM ((SELECT * FROM pedido WHERE(tipo = 'empresarial' AND id_cliente LIKE '"+telefono+"')) AS pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido)");
        }
        
         //llenando pedido viejo en la interfaz grafica
@@ -139,7 +139,7 @@ public class Pedido extends View implements IView{
             
             jTextField23.setText(ultimoIdUsuario);
             
-            jTextField13.setText((Float.parseFloat(ultimoPrecioTotal)+(Float.parseFloat(ultimoCondonado))));
+            jTextField13.setText(""+(Double.parseDouble(ultimoPrecioTotal)+(Double.parseDouble(ultimoCondonado))));
             
             jTextField14.setText(ultimoCondonado);
             
@@ -159,13 +159,13 @@ public class Pedido extends View implements IView{
             
             db=new DataBase();
             if(ultimoTipo.equals("comun")){
-                ultimoProductos=db.excecuteQuery("SELECT id_productom,consecutivo,nombre,color,peso,precio FROM productomxpedido WHERE (id_pedido_fecha = '"+ultimoFecha+"' AND id_pedido_fecha = '"+ultimoNumero+"')");
+                ultimoProductos=db.excecuteQuery("SELECT id_productom_codigo,consecutivo,nombre,color,peso,precio FROM productomxpedido WHERE (id_pedido_fecha = '"+ultimoFecha+"' AND id_pedido_numero = '"+ultimoNumero+"')");
             }
             else{
-                ultimoProductos=db.excecuteQuery("SELECT id_productom,consecutivo,nombre,color,peso,precio FROM productoexpedido WHERE (id_pedido_fecha = '"+ultimoFecha+"' AND id_pedido_fecha = '"+ultimoNumero+"')");
+                ultimoProductos=db.excecuteQuery("SELECT id_productoe_codigo,consecutivo,nombre,color,peso,precio FROM productoexpedido WHERE (id_pedido_fecha = '"+ultimoFecha+"' AND id_pedido_numero = '"+ultimoNumero+"')");
             }
             //creando tabla de productos del ultimo predido
-        String[] cabecera= new String[6];
+            String[] cabecera= new String[6];
             cabecera[0]="codigo";
             cabecera[1]="consecutivo";
             cabecera[2]="nombre";
@@ -175,7 +175,7 @@ public class Pedido extends View implements IView{
             SimpleTableDemo viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(ultimoProductos,6).result(),"productos","Carrito",this,"todaLaFila");
             viejo.add( frame );
             SimpleTableDemo newContentPane = new SimpleTableDemo();
-            newContentPane.setOpaque(true); //content panes must be opaque
+            newContentPane.setOpaque(true); 
             frame.setContentPane(viejoSQL);
             frame.setBorder(null);
             ((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getUI()).setNorthPane(null);
@@ -218,15 +218,6 @@ public class Pedido extends View implements IView{
             int orden = Integer.parseInt((String) newdate.get(1))+1;
             jTextField8.setText(Integer.toString(orden));
         }
-        /*
-            ArrayList municipios = db.excecuteQuery("SELECT nombremunicipio FROM municipio");
-        
-            DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
-            for (int i = 0; i < municipios.size(); i++) {
-                modeloCombo.addElement(((ArrayList)municipios.get(i)).get(0));
-            }
-        jComboBox1.setModel(modeloCombo); 
-        */
         db= new DataBase();
             ArrayList empleados = db.excecuteQuery("SELECT cedula, nombre FROM empleado");
         
@@ -248,6 +239,10 @@ public class Pedido extends View implements IView{
         frame.pack();
         
         frame.setVisible(true);
+        
+        jTextField6.setText(jTextField3.getText());
+        jTextArea2.setText(jTextArea1.getText());
+        
         
        //llenando por defecto la tabla del nuevo pedido 
         cabecera= new String[6];
@@ -271,6 +266,7 @@ public class Pedido extends View implements IView{
         frame2.setVisible(true);
         
         //llenando por defecto la tabla de busqueda de los productos 
+        db= new DataBase();
         if(comun.equals("1")){
              productosconsulta = db.excecuteQuery("SELECT codigo,nombre,peso,tipo FROM productom WHERE id_municipio = '"+idMunicipio+"'");
         }
@@ -529,7 +525,7 @@ public class Pedido extends View implements IView{
         );
         viejoLayout.setVerticalGroup(
             viejoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 239, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jLabel15.setText("Precio bruto");
@@ -581,7 +577,7 @@ public class Pedido extends View implements IView{
         });
 
         jTextField18.setEditable(false);
-        jTextField18.setText("0");
+        jTextField18.setText("ninguno");
         jTextField18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField18ActionPerformed(evt);
@@ -648,7 +644,7 @@ public class Pedido extends View implements IView{
         );
         productoslayoutLayout.setVerticalGroup(
             productoslayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 244, Short.MAX_VALUE)
         );
 
         jButton2.setText("Registrar pedido");
@@ -1034,17 +1030,20 @@ public class Pedido extends View implements IView{
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(viejo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(productoslayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(viejo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jLabel19)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton4)
+                            .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5)
                         .addGap(51, 51, 51)
@@ -1055,23 +1054,27 @@ public class Pedido extends View implements IView{
                         .addComponent(jLabel29)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel15)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel16))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel16))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel17)
-                                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel17)
+                                        .addGap(24, 24, 24)
+                                        .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel18)
@@ -1080,7 +1083,7 @@ public class Pedido extends View implements IView{
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel23)
                                     .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel28)
                                     .addComponent(jTextField27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1089,19 +1092,19 @@ public class Pedido extends View implements IView{
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton6))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton7))
-                                .addGap(11, 11, 11)
-                                .addComponent(jTextField29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButton6)
+                                        .addGap(35, 35, 35))
+                                    .addComponent(jButton7)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
+                                        .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1205,26 +1208,58 @@ public class Pedido extends View implements IView{
     }//GEN-LAST:event_jTextField22ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       // TODO add your handling code here:
+       // obteniendo empleado selecto
        String c = (String)jComboBox2.getSelectedItem();
-        System.out.println(c);
        String[] d = c.split("-");
-        System.out.println(d);
        String cedulaEmpleado = d[1];
+       
+       String tipoInsercion = "empresarial";
+       
+       if(comun.equals("1")){
+           tipoInsercion="comun";
+       }
+       
         db= new DataBase();
-        db.insertar3("INSERT INTO pedido (fecha,numero,direccion, cedula, telefono, condonado, obsequio, nota, precioBruto, precioNeto, nick, estado ) VALUES ("+"'"+today+"',"+"'"+jTextField8.getText()+"',"+"'"+jTextField6.getText()+"',"+"'"+cedulaEmpleado+"',"+"'"+telefono+"',"+"'"+jTextField19.getText()+"',"+"'"+jTextField18.getText()+"',"+"'"+jTextArea2.getText()+"',"+"'"+jTextField20.getText()+"',"+"'"+jTextField22.getText()+"',"+"'"+jTextField24.getText()+"',"+"'"+jComboBox3.getSelectedItem()+"'"+")");
-        
+        db.insertar3("INSERT INTO pedido(fecha,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio) VALUES('"+fechaActual+"','"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','"+jTextField18.getText()+"','"+jTextField29.getText()+"')");
+ 
        int numeroInserciones = this.productosInsercion.size()-1;
-       if(numeroInserciones >= 0)
-        for (int i = 0; i <= numeroInserciones; i++) {
-           ArrayList productoi = (ArrayList)productosInsercion.get(i);
-            db= new DataBase();
-            db.insertar3("INSERT INTO productoxpedido(precio, puntos, consecutivo, fecha, numero, codigo) VALUES('"+productoi.get(4)+"','"+productoi.get(5)+"','"+(i+1)+"','"+today+"','"+jTextField8.getText()+"','"+productoi.get(0)+"')");
-        }
-        
-        db=new DataBase();
-        db.actualizar("UPDATE producto SET precioBase = precioBase + 1 WHERE disponible= 1");
+       String consecutivoInsercion, nombreInsercion, colorInsercion,pesoInsercion,puntosInsercion,codigoInsercion,municipioInsercion,clienteInsercion,fechaInsercion,numeroInsercion;
+       String precioInsercion;
+       fechaInsercion = fechaActual;
+       numeroInsercion = jTextField8.getText();
+       if(comun.equals("1")){
+        if(numeroInserciones >= 0)
+         for (int i = 0; i <= numeroInserciones; i++) {
+             ArrayList producto= (ArrayList)productosInsercion.get(i);
+            consecutivoInsercion = (String)producto.get(0);
+            nombreInsercion = (String)producto.get(1);
+            colorInsercion = (String)producto.get(2);
+            pesoInsercion = (String)producto.get(3);
+            precioInsercion = (String)producto.get(4);
+            puntosInsercion = (String)producto.get(5);
+            codigoInsercion = (String)producto.get(6);
+            municipioInsercion = jTextField12.getText();
+             db= new DataBase();
+             db.insertar3("INSERT INTO productomxpedido(consecutivo,nombre,color,peso,precio,puntos,id_productom_codigo,id_productom_id_municipio,id_pedido_fecha,id_pedido_numero) VALUES('"+(i+1)+"','"+nombreInsercion+"','"+colorInsercion+"','"+pesoInsercion+"','"+precioInsercion+"','"+puntosInsercion+"','"+codigoInsercion+"','"+municipioInsercion+"','"+fechaInsercion+"','"+numeroInsercion+"')");
+         }
+       }
+       else{
+           for (int i = 0; i <= numeroInserciones; i++) {
+                ArrayList producto= (ArrayList)productosInsercion.get(i);
+            consecutivoInsercion = (String)producto.get(0);
+            nombreInsercion = (String)producto.get(1);
+            colorInsercion = (String)producto.get(2);
+            pesoInsercion = (String)producto.get(3);
+            precioInsercion = (String)producto.get(4);
+            puntosInsercion = (String)producto.get(5);
+            codigoInsercion = (String)producto.get(6);
+            clienteInsercion = telefono;
+             db= new DataBase();
+             db.insertar3("INSERT INTO productoexpedido(consecutivo,nombre,color,peso,precio,puntos,id_productoe_codigo,id_productoe_id_cliente,id_pedido_fecha,id_pedido_numero) VALUES('"+consecutivoInsercion+"','"+nombreInsercion+"','"+colorInsercion+"','"+pesoInsercion+"','"+puntosInsercion+"','"+codigoInsercion+"','"+clienteInsercion+"','"+fechaInsercion+"','"+numeroInsercion+"')");
+         }
+       }
         new ImpresionTermica();
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField25KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField25KeyPressed
@@ -1425,7 +1460,7 @@ public class Pedido extends View implements IView{
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    public javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     public javax.swing.JPanel nuevo;
     private javax.swing.JPanel productoslayout;

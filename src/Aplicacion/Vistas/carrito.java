@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Frame de la eliminacion del empleado
- * @author santiquiroz e isamelTheMemeMaster
+ * @author santiquiroz 
  * @version 0.8.1(actualmente desechado)
  * @since JConexionDB 1.0
  */
@@ -29,6 +30,7 @@ public class carrito extends View implements IView{
     Double aumentoMunicipio,aumentoCliente,aumentoProducto,aumentoTotal,precioFinal,ultimoprecio,aumentoClientein;
     Pedido vPedido;
     ArrayList infocliente;
+    ArrayList colores;
     public carrito(String idprod,Pedido ventanaPadre) {
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -47,129 +49,55 @@ public class carrito extends View implements IView{
     public carrito(ArrayList datos,Pedido ventanaPadre,String tipo) {
         initComponents();
         vPedido=ventanaPadre;
-        telefono=ventanaPadre.telefono;
-        System.out.println((ArrayList)ventanaPadre.vliente);
-        infocliente = (ArrayList)ventanaPadre.vliente.get(0);
+        this.telefono=ventanaPadre.telefono;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         codigo=(String)datos.get(0);
         nombre=(String)datos.get(1);
         peso=(String)datos.get(2);
         ti=(String)datos.get(3);
-        descripcion=(String)datos.get(4);
-        preciobase=(String)datos.get(5);
-        
         jTextField1.setText(codigo);
         jTextField2.setText(nombre);
         jTextField3.setText(peso);
-        jTextArea1.setText(descripcion);
         
-        calcularAumentos();
-        jTextField5.setText(this.aumentoTotal.toString());
         DataBase db = new DataBase();
+        db= new DataBase();
+            
+            colores = new ArrayList();
+            if(this.vPedido.comun.equals("1")){
+                colores = db.excecuteQuery("SELECT color FROM colorm WHERE disponible ='1' AND id_productom_codigo = '"+codigo+"' AND id_productom_id_municipio = '"+this.vPedido.idMunicipio+"'");
+            }
+            else{
+                colores = db.excecuteQuery("SELECT color FROM colore WHERE disponible ='1' AND id_productoe_codigo = '"+codigo+" AND id_producto2_id_cliente = '"+this.vPedido.telefono+"'");
+            }
+            
         
-        jTextField4.setText(precioFinal.toString());
-        
+            jComboBox1.removeAllItems();
+            DefaultComboBoxModel modeloCombo2 = new DefaultComboBoxModel();
+            ArrayList emp;
+            for (int i = 0; i < colores.size(); i++) {
+                emp=(ArrayList)colores.get(i);
+                modeloCombo2.addElement(emp.get(0));
+            }
+        jComboBox1.setModel(modeloCombo2);
+        db= new DataBase();
+        if(this.vPedido.comun.equals("1")){
+           db.excecuteQuery("SELECT precio FROM colorm WHERE color ='"+jComboBox1.getSelectedItem()+"' AND id_productom_codigo = '"+codigo+"' AND id_productom_id_municipio = '"+this.vPedido.idMunicipio+"'");
+ 
+        }
+        else{
+            db.excecuteQuery("SELECT precio FROM colore WHERE color ='"+jComboBox1.getSelectedItem()+"' AND id_productoe_codigo = '"+codigo+"' AND id_productom_id_cliente = '"+this.vPedido.telefono+"'");
 
+        }
+        String precioBase = db.getDato(0,0);
+        jTextField6.setText(precioBase);
+        jTextField4.setText(precioBase);
+        
         setVisible(true);
         setTitle("Agregar producto");
         setLocationRelativeTo(null);
     }
-    public Double calcularAumentos(){
-        db=new DataBase();
-        //ultimo precio ofrecido el producto y fecha de su pedido        
-        ArrayList ultimo_precio_consulta=db.excecuteQuery("SELECT ultimoprecio, fecha FROM (SELECT ultimoprecio, fecha FROM hclientexproducto WHERE telefono = '"+telefono+"' AND codigo = '"+codigo+"') WHERE fecha = Max(fecha)");
-        
-        //si nunca se ofrecio
-        if(db.isEmpty()){
-            System.out.println("este producto nunca fue ofrecido");
-            db=new DataBase();
-            db.excecuteQuery("SELECT precioBase FROM producto WHERE codigo = '"+codigo+"'");
-            this.ultimoprecio = Double.parseDouble(db.getDato(0,0)) ;
-            //ultimo aumento por municipio
-            
-            db=new DataBase();
-            db.excecuteQuery("SELECT * FROM (SELECT * FROM aumentomun WHERE(nombremunicipio = '"+(String)infocliente.get(6)+"')) WHERE(fechamodificacion = MAX(fechamodificacion)");
-            if(db.isEmpty()){
-                this.aumentoMunicipio=0.0;
-            }
-            else{
-                //verifico si el cliente es un cliente comun para poder subirle por municipio
-                if(((ArrayList)(vPedido.vliente.get(0))).get(4).equals("1")){
-                    this.aumentoMunicipio=Double.parseDouble(db.getDato(0, 1));
-                }
-                else{
-                    this.aumentoMunicipio=0.0;
-                }
-            }
-            //ultimo aumento por cliente
-            db = new DataBase();
-            db.excecuteQuery("SELECT * FROM (SELECT * FROM aumentoclien WHERE telefono = '"+telefono+"') WHERE fechamodificacion = MAX(fechamodificacion)");
-            if(db.isEmpty()){
-                this.aumentoCliente=0.0;
-            }
-            else{
-                this.aumentoCliente=Double.parseDouble(db.getDato(0, 1));
-            }
-            //ultimo aumento por cliente en el producto en especifico            
-            db = new DataBase();
-            db.excecuteQuery("SELECT * FROM (SELECT * FROM aumentoclienin WHERE telefono = '"+telefono+"' AND codigo = '"+codigo+"') WHERE fechamodificacion = MAX(fechamodificacion)");
-            if(db.isEmpty()){
-                this.aumentoClientein=0.0;
-            }
-            else{
-                this.aumentoClientein=Double.parseDouble(db.getDato(0, 1));
-            }
-            
-        }
-        //si se ofrecio se buscan los aumentos que se hicieron desde la ultima oferta hasta hoy
-        else{
-            System.out.println("este producto fue ofrecido almenos una vez");
-            ArrayList ultimo_precio_tupla =(ArrayList) ultimo_precio_consulta.get(0);
-            String ultima_fecha =(String) ultimo_precio_tupla.get(1);
-            String ultimo_precio = (String) ultimo_precio_tupla.get(0);
-            //aumentos por municipio
-            db = new DataBase();
-            db.excecuteQuery("SELECT SUM(valor) FROM (SELECT * FROM aumentomun WHERE(nombremunicipio = '"+(String)infocliente.get(6)+"')) WHERE(fechamodificacion > '"+ultima_fecha+"')");
-            if(db.isEmpty()){
-                this.aumentoMunicipio=0.0;
-            }
-            else{
-                //verifico si el cliente es un cliente comun para poder subirle por municipio
-                if(((ArrayList)(vPedido.vliente.get(0))).get(4).equals("1")){
-                   String sumaMuniciopio= db.getDato(0, 1);
-                    this.aumentoMunicipio= Double.parseDouble(sumaMuniciopio);
-                }
-                else{
-                    this.aumentoMunicipio=0.0;
-                }
-            }
-            //aumentos por cliente
-            db=new DataBase();
-            db.excecuteQuery("SELECT SUM(valor) FROM (SELECT * FROM aumentoclien WHERE telefono = '"+telefono+"') WHERE fechamodificacion > '"+ultima_fecha+"'");
-            if(db.isEmpty()){
-                this.aumentoCliente=0.0;
-            }
-            else{
-                this.aumentoCliente=Double.parseDouble(db.getDato(0, 1));
-            }
-            //ultimo aumento por cliente en el producto en especifico            
-            db = new DataBase();
-            db.excecuteQuery("SELECT SUM(VALOR) FROM (SELECT * FROM aumentoclienin WHERE telefono = '"+telefono+"' AND codigo = '"+codigo+"') WHERE fechamodificacion > '"+ultima_fecha+"'");
-            if(db.isEmpty()){
-                this.aumentoClientein=0.0;
-            }
-            else{
-                this.aumentoClientein=Double.parseDouble(db.getDato(0, 1));
-            }
-            this.ultimoprecio= Double.parseDouble(ultimo_precio);
-        }
-        
-        this.aumentoTotal=this.aumentoCliente+this.aumentoClientein+this.aumentoMunicipio;
-        this.precioFinal=this.aumentoTotal+Double.parseDouble(this.preciobase);
-        System.out.println(precioFinal);
-        return(precioFinal);
-        
-    }
+   
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -179,18 +107,17 @@ public class carrito extends View implements IView{
         jLabel32 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jLabel41 = new javax.swing.JLabel();
         jButton14 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel19 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
+        jLabel35 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -223,8 +150,6 @@ public class carrito extends View implements IView{
             }
         });
 
-        jLabel41.setText("Descripcion");
-
         jButton14.setText("Agregar");
         jButton14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,16 +158,6 @@ public class carrito extends View implements IView{
         });
 
         jLabel18.setText(" Precio por unidad final");
-
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jLabel19.setText("Aumento de precio por unidad");
-
-        jTextField5.setEditable(false);
-        jTextField5.setText("0");
 
         jLabel33.setText("Peso");
 
@@ -259,6 +174,19 @@ public class carrito extends View implements IView{
         jSpinner1.setFocusable(false);
         jSpinner1.setValue(1);
 
+        jLabel35.setText("Color");
+
+        jTextField6.setEnabled(false);
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
+
+        jLabel36.setText("Precio base por unidad");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -267,21 +195,23 @@ public class carrito extends View implements IView{
             .addGroup(layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel33)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jToggleButton6)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel32)
-                                .addComponent(jLabel18)
-                                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel19)))
-                        .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jToggleButton6)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel32)
+                                        .addComponent(jLabel18))
+                                    .addGap(41, 41, 41)))
+                            .addComponent(jLabel35))
+                        .addGap(58, 58, 58)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(452, 452, 452)
                                 .addComponent(jButton14))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1)
                                 .addComponent(jTextField4)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,15 +220,19 @@ public class carrito extends View implements IView{
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addComponent(jLabel39))
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jLabel34)))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel36)
+                                                .addComponent(jLabel34))))
                                     .addGap(35, 35, 35)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField6)
                                         .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                                        .addComponent(jSpinner1))))))
-                    .addComponent(jLabel33))
-                .addContainerGap(165, Short.MAX_VALUE))
+                                        .addComponent(jSpinner1)))))))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,15 +254,14 @@ public class carrito extends View implements IView{
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel34))
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel41)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel35)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel36)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -359,56 +292,62 @@ public class carrito extends View implements IView{
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         int numerodeproductos = (int)jSpinner1.getValue();
-        
+        String color = (String) jComboBox1.getSelectedItem();
+        String precio = (String) jTextField4.getText();
+        db= new DataBase();
+        db.excecuteQuery("SELECT puntosxkilo FROM static");
+        String puntosxkilo=db.getDato(0, 0);
+        String puntos = String.valueOf((Double.parseDouble(peso))*(Double.parseDouble(puntosxkilo)));
         for (int i = 0; i < numerodeproductos; i++) {
             ArrayList producto = new ArrayList();
-            ArrayList productoinsercion = new ArrayList();
+            ArrayList productoInsercion = new ArrayList();
             producto.add(codigo);
-            productoinsercion.add(codigo);
+            int u=this.vPedido.productos.size();
+            if(u>0){
+                producto.add((Integer.parseInt((((String)((ArrayList) this.vPedido.productos.get(u-1)).get(1))))+1)+"");
+            }
+            else{
+                producto.add("1");
+            }
             producto.add(nombre);
-            productoinsercion.add(nombre);
+            producto.add(color);
             producto.add(peso);
-            productoinsercion.add(peso);
-            productoinsercion.add(ti);
-            //producto.add(descripcion);
-            //productoinsercion.add(descripcion);
-            String f = jTextField4.getText();
-            producto.add(f);
-            productoinsercion.add(f);
-            db = new DataBase();
-            db.excecuteQuery("SELECT puntosxkilo FROM static");
-            String pesoxkilo = db.getDato(0,0);
-            System.out.println(pesoxkilo);
-            String puntos;
-            Double puntoso = ((Double.parseDouble(peso)) * (Double.parseDouble(pesoxkilo)));
-            puntos = puntoso.toString();
-            producto.add(puntos);
-            productoinsercion.add(puntos);
-            System.out.println(producto);
-            System.out.println(productoinsercion);
+            producto.add(precio);
+            this.vPedido.productos.add(producto);
+            
+            productoInsercion.add(Integer.toString(i+1));
+            productoInsercion.add(nombre);
+            productoInsercion.add(color);
+            productoInsercion.add(peso);
+            productoInsercion.add(precio);
+            productoInsercion.add(puntos);
+            productoInsercion.add(codigo);
+            productoInsercion.add(this.vPedido.fechaActual);
+            productoInsercion.add(this.vPedido.jTextField8.getText());
+            this.vPedido.productosInsercion.add(productoInsercion);
+            
             //actualizando puntos
-            Double currentpuntos= Double.parseDouble(vPedido.jTextField17.getText()) + puntoso;
+            Double currentpuntos= Double.parseDouble(vPedido.jTextField17.getText()) + Double.parseDouble(puntos);
             this.vPedido.jTextField17.setText((currentpuntos).toString());
-            //acttualizando precio bruto
-            Double currentpreciobruto= Double.parseDouble(vPedido.jTextField20.getText()) + Double.parseDouble(f);
+            //actualizando precio bruto
+            Double currentpreciobruto= Double.parseDouble(vPedido.jTextField20.getText()) + Double.parseDouble(precio);
             this.vPedido.jTextField20.setText((currentpreciobruto).toString());
             //actualizando precio neto
-            Double currentprecioneto= Double.parseDouble(vPedido.jTextField22.getText()) + Double.parseDouble(f);
+            Double currentprecioneto= Double.parseDouble(vPedido.jTextField22.getText()) + Double.parseDouble(precio);
             this.vPedido.jTextField22.setText((currentprecioneto).toString());
-            this.vPedido.productos.add(producto);
-            this.vPedido.productosInsercion.add(productoinsercion);
             
         }
-        
+       
         if(numerodeproductos > 0){
             this.vPedido.nuevo.removeAll();
-            String[] cabecera= new String[5];
+            String[] cabecera= new String[6];
                     cabecera[0]="codigo";
-                    cabecera[1]="nombre";
-                    cabecera[2]="peso";
-                    cabecera[3]="precio";
-                    cabecera[4]="puntos";     
-            SimpleTableDemo productoSQL1= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(this.vPedido.productos,5).result(),"productos","Carrito",this,"todaLaFila");
+                    cabecera[1]="consecutivo";
+                    cabecera[2]="nombre";
+                    cabecera[3]="color";
+                    cabecera[4]="peso";     
+                    cabecera[5]="precio";   
+            SimpleTableDemo productoSQL1= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(this.vPedido.productos,6).result(),"productos","Carrito",this,"todaLaFila");
             this.vPedido.nuevo.add( this.vPedido.frame2 );
             SimpleTableDemo newContentPaneproducto = new SimpleTableDemo();
             newContentPaneproducto.enable(false);
@@ -432,25 +371,28 @@ public class carrito extends View implements IView{
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton14;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private javax.swing.JToggleButton jToggleButton6;
     // End of variables declaration//GEN-END:variables
 

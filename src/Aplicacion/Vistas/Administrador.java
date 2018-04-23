@@ -224,6 +224,7 @@ public class Administrador extends View implements IView{
         jTextField33 = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         jLabel34 = new javax.swing.JLabel();
         jTextField23 = new javax.swing.JTextField();
@@ -299,7 +300,7 @@ public class Administrador extends View implements IView{
         );
         panelPedidosHoyLayout.setVerticalGroup(
             panelPedidosHoyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 331, Short.MAX_VALUE)
+            .addGap(0, 741, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -314,9 +315,9 @@ public class Administrador extends View implements IView{
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(36, 36, 36)
                 .addComponent(panelPedidosHoy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Pedidos del dia", jPanel17);
@@ -515,7 +516,7 @@ public class Administrador extends View implements IView{
                     .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48)
                 .addComponent(jButton15)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(463, Short.MAX_VALUE))
         );
 
         jTabbedPane5.addTab("Buscar Producto", jPanel21);
@@ -538,7 +539,7 @@ public class Administrador extends View implements IView{
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Pedidos", jPanel1);
@@ -909,7 +910,7 @@ public class Administrador extends View implements IView{
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(354, Short.MAX_VALUE))
+                .addContainerGap(554, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Empleados", jPanel2);
@@ -1180,7 +1181,7 @@ public class Administrador extends View implements IView{
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 415, Short.MAX_VALUE))
+                .addGap(0, 603, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Usuarios", jPanel5);
@@ -1201,7 +1202,7 @@ public class Administrador extends View implements IView{
             }
         });
 
-        jButton5.setText("Registrar");
+        jButton5.setText("Registrar producto");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -1254,39 +1255,51 @@ public class Administrador extends View implements IView{
 
         jLabel46.setText("Precio");
 
+        jButton10.setText("Registrar color");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel30)
                     .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel29)
-                            .addComponent(jLabel39)
-                            .addComponent(jLabel30)
-                            .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel40)
-                                    .addComponent(jLabel45)
-                                    .addComponent(jLabel31)
-                                    .addComponent(jLabel33)
-                                    .addComponent(jLabel46))
-                                .addGap(171, 171, 171)
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField33)
-                                    .addComponent(jTextField32)
-                                    .addComponent(jTextField27)
-                                    .addComponent(jTextField29)
-                                    .addComponent(jTextField22)
-                                    .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox6, 0, 241, Short.MAX_VALUE)
-                                    .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(jLabel40)
+                            .addComponent(jLabel45)
+                            .addComponent(jLabel31))
+                        .addGap(171, 171, 171)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField27)
+                            .addComponent(jTextField29)
+                            .addComponent(jTextField22)
+                            .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox6, 0, 241, Short.MAX_VALUE)
+                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(jButton5)))
-                .addGap(0, 60, Short.MAX_VALUE))
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel46)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField32, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(jTextField33)
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 103, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1315,7 +1328,7 @@ public class Administrador extends View implements IView{
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel31))
-                .addGap(18, 18, 18)
+                .addGap(112, 112, 112)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel33))
@@ -1323,9 +1336,11 @@ public class Administrador extends View implements IView{
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel46))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addGap(87, 87, 87))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton10))
+                .addGap(85, 85, 85))
         );
 
         jTabbedPane4.addTab("Registrar Producto", jPanel14);
@@ -1542,7 +1557,7 @@ public class Administrador extends View implements IView{
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 205, Short.MAX_VALUE))
+                .addGap(0, 381, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Productos", jPanel13);
@@ -1621,7 +1636,7 @@ public class Administrador extends View implements IView{
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addComponent(jButton1)
-                .addContainerGap(628, Short.MAX_VALUE))
+                .addContainerGap(822, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mi cuenta", jPanel4);
@@ -1685,7 +1700,7 @@ public class Administrador extends View implements IView{
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(354, Short.MAX_VALUE))
+                .addContainerGap(554, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Municipios", jPanel18);
@@ -1799,7 +1814,11 @@ public class Administrador extends View implements IView{
                 ((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getUI()).setNorthPane(null);
             }
             frame.pack();
-        
+            try {
+           frame.setMaximum(true);
+       } catch (PropertyVetoException ex) {
+           Logger.getLogger(Pedido.class.getName()).log(Level.SEVERE, null, ex);
+       }
             frame.setVisible(true);
             this.panelPedidosHoy.repaint();
     }
@@ -2126,38 +2145,63 @@ public class Administrador extends View implements IView{
         jTextField12.setText("");
         jComboBox2.setSelectedIndex(0);
     }
-    
+    private void RegistrarColor(){
+        db= new DataBase();
+        boolean b1 = IO.textfield_requerido(jTextField21, jTextField27,jTextField32,jTextField33);
+        String tablaProducto=(String)jComboBox4.getSelectedItem();
+        String codigoProducto=jTextField21.getText();
+        String id_clienteProducto=jTextField27.getText();
+        String colorProducto=jTextField32.getText();
+        String precioProducto=jTextField33.getText();
+        
+        if (b1 && (tablaProducto.equals("Empresarial"))){
+            db = new DataBase();
+            db.excecuteQuery("SELECT * FROM colore WHERE(color='"+colorProducto+"' AND id_productoe_id_cliente = '"+id_clienteProducto+"' AND id_productoe = '"+codigoProducto+"')");
+            if(db.isEmpty()){
+                db = new DataBase();
+                db.insertar3("INSERT INTO colore (color,precio,disponible,id_productoe_codigo,id_productoe_id_cliente) VALUES( '"+colorProducto+"', '"+precioProducto+"', '1', '"+codigoProducto+"','"+id_clienteProducto+"')");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El color ya esta registrado");
+            }
+            
+        }
+        else if(b1){
+            db= new DataBase();
+            db.excecuteQuery("SELECT * FROM colorm WHERE(color='"+colorProducto+"' AND id_productom_id_municipio = '"+id_clienteProducto+"' AND id_productom = '"+codigoProducto+"')");
+            if(db.isEmpty()){
+                db = new DataBase();
+                db.insertar3("INSERT INTO colorm (color,precio,disponible,id_productom_codigo,id_productom_id_municipio) VALUES('"+colorProducto+"','"+precioProducto+"','1','"+codigoProducto+"','"+id_clienteProducto+"')");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El codigo ya esta registrado");
+            }
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Llene todos los campos");
+        }
+    }
     private void RegistrarProducto(){
-        boolean b1 = IO.textfield_requerido(jTextField21, jTextField22, jTextField29,jTextField27, jTextField32, jTextField33 );
+        db= new DataBase();
+        boolean b1 = IO.textfield_requerido(jTextField21, jTextField22, jTextField29,jTextField27 );
         String tablaProducto=(String)jComboBox4.getSelectedItem();
         String codigoProducto=jTextField21.getText();
         String nombreProducto=jTextField29.getText();
         String pesoProducto=jTextField22.getText();
         String tipoProducto=(String)jComboBox6.getSelectedItem();
         String id_clienteProducto=jTextField27.getText();
-        String colorProducto=jTextField32.getText();
-        String precioProducto=jTextField33.getText();
-        System.out.println(b1);
-        System.out.println(tablaProducto);
-        System.out.println(codigoProducto);
-        System.out.println(nombreProducto);
-        System.out.println(pesoProducto);
-        System.out.println(tipoProducto);
-        System.out.println(id_clienteProducto);
-        System.out.println(colorProducto);
-        System.out.println(precioProducto);
+        
         if (b1 && (tablaProducto.equals("Empresarial"))){
-            db= new DataBase();
+            
             db.excecuteQuery("SELECT * FROM productoe WHERE(codigo='"+codigoProducto+"' AND id_cliente = '"+id_clienteProducto+"')");
             if(db.isEmpty()){
                 
                 db = new DataBase();
-                db.insertar3("INSERT INTO productoe VALUES(codigo='"+codigoProducto+"', nombre = '"+nombreProducto+"', peso = '"+pesoProducto+"', tipo='"+tipoProducto+"',id_cliente = '"+id_clienteProducto+"')");
-                db = new DataBase();
-                db.insertar3("INSERT INTO colore VALUES(color= '"+colorProducto+"', precio = '"+precioProducto+"', disponible = '1', id_productoe='"+codigoProducto+"')");
+                db.insertar3("INSERT INTO productoe(codigo,nombre,peso,tipo,id_cliente) VALUES('"+codigoProducto+"','"+nombreProducto+"','"+pesoProducto+"', '"+tipoProducto+"','"+id_clienteProducto+"')");
             }
             else{
-                JOptionPane.showMessageDialog(null, "El codigo ya esta registrado");
+                JOptionPane.showMessageDialog(null, "El producto ya esta registrado");
             }
             
         }
@@ -2167,13 +2211,10 @@ public class Administrador extends View implements IView{
             if(db.isEmpty()){
                 
                 db = new DataBase();
-                db.insertar3("INSERT INTO productom VALUES(codigo ='"+codigoProducto+"', nombre = '"+nombreProducto+"', peso = '"+pesoProducto+"', tipo='"+tipoProducto+"',id_municipio = '"+id_clienteProducto+"')");
-                db = new DataBase();
-                db.insertar3("INSERT INTO colorm VALUES(color = '"+colorProducto+"', precio = '"+precioProducto+"', disponible = '1', id_productom='"+codigoProducto+"')");
-            
+                db.insertar3("INSERT INTO productom(codigo,nombre,peso,tipo,id_municipio) VALUES( '"+codigoProducto+"', '"+nombreProducto+"', '"+pesoProducto+"', '"+tipoProducto+"', '"+id_clienteProducto+"')");
             }
             else{
-                JOptionPane.showMessageDialog(null, "El codigo ya esta registrado");
+                JOptionPane.showMessageDialog(null, "El producto ya esta registrado");
             }
             
         }
@@ -2836,9 +2877,14 @@ public class Administrador extends View implements IView{
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField33ActionPerformed
 
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+       RegistrarColor();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
