@@ -216,9 +216,9 @@ public class ClienteNuevo extends View implements IView{
             else{
                 comun = "0";empresarial="1";
             }
-            if (comun.equals("1")){     
-                db.insertar3("INSERT INTO cliente (telefono,nombre,fecha_registro,puntos,empresarial,comun,id_municipio) VALUES ('"+telefono+"','"+nombre+"',CURRENT_DATE(),'0','1','0','"+jComboBox2.getSelectedItem()+"')");    
-            }
+               
+            db.insertar3("INSERT INTO cliente (telefono,nombre,fecha_registro,puntos,empresarial,comun,id_municipio) VALUES ('"+telefono+"','"+nombre+"',CURRENT_DATE(),'"+comun+"','"+empresarial+"','0','"+jComboBox2.getSelectedItem()+"')");    
+            
            
             new Pedido(telefono,usuario);
             this.dispose();

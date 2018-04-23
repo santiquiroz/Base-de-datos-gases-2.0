@@ -10,10 +10,10 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Nekszer
+ * @author santiquiroz
  */
 public class View extends JFrame {
-
+    
     /**
      * Instancia de la clase IController, utilizada para lanzar el evento
      * start y onClickFromUI
