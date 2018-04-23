@@ -172,7 +172,7 @@ public class Pedido extends View implements IView{
             cabecera[3]="color";
             cabecera[4]="peso";
             cabecera[5]="precio";
-            SimpleTableDemo viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(ultimoProductos,6).result(),"productos","Carrito",this,"todaLaFila");
+            SimpleTableDemo viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(ultimoProductos,6).result(),"productos","",this,"todaLaFila");
             viejo.add( frame );
             SimpleTableDemo newContentPane = new SimpleTableDemo();
             newContentPane.setOpaque(true); 

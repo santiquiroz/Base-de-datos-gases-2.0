@@ -90,6 +90,10 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                         case "Carrito":
                             new carrito((String) puntero,(Pedido) ventanaPadre);
                             break;
+                        case "InfoPedido":
+                            Object numero = tabla.getValueAt(row, 1);
+                            new InfoPedido((String) puntero, (String) numero);
+                            break;
                         default:
                             break;
                     }
@@ -118,31 +122,14 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                     System.out.println("seleccionado"); //por si las moscas
                     System.out.println(datos);
                     
-                    /*if(ventanaObjetivo.equals ("EditarEmpleado")){
-                      
-                        new EditarEmpleado((String) puntero);
-
-                    }
-                    
-                    else if(ventanaObjetivo.equals ("EditarProducto")){
-                      
-                        new EditarProducto((String) puntero);
-
-                    }
-                    else if(ventanaObjetivo.equals ("Carrito")){*/
-                        
                         new carrito(datos,(Pedido) ventanaPadre,"busqueda");
-                        
-                        
-                    //}
-                            
-                            
-                    
                     
                 }
             });
         }
     }
+    
+    
     
     public SimpleTableDemo() {
         super(new GridLayout(1,0));

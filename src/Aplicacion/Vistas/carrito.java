@@ -5,6 +5,8 @@ import System.DataBase.Core.DataBase;
 import System.Helper.IO;
 import System.MVC.Core.IView;
 import System.MVC.Core.View;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +33,11 @@ public class carrito extends View implements IView{
     Pedido vPedido;
     ArrayList infocliente;
     ArrayList colores;
+    final String c,mun,tel;
     public carrito(String idprod,Pedido ventanaPadre) {
+        c=ventanaPadre.comun;
+        tel=ventanaPadre.telefono;
+        mun="";
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         codigo=idprod;
@@ -49,6 +55,9 @@ public class carrito extends View implements IView{
     public carrito(ArrayList datos,Pedido ventanaPadre,String tipo) {
         initComponents();
         vPedido=ventanaPadre;
+        c=this.vPedido.comun;
+        mun=this.vPedido.idMunicipio;
+        tel=this.vPedido.telefono;
         this.telefono=ventanaPadre.telefono;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         codigo=(String)datos.get(0);
@@ -92,6 +101,21 @@ public class carrito extends View implements IView{
         jTextField6.setText(precioBase);
         jTextField4.setText(precioBase);
         
+        jComboBox1.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent e){
+                DataBase db1= new DataBase();
+                if(c.equals("1")){
+                   db1.excecuteQuery("SELECT precio FROM colorm WHERE color = '"+jComboBox1.getSelectedItem()+"' AND id_productom_codigo = '"+jTextField1.getText()+"' AND id_productom_id_municipio = '"+mun+"'"); 
+                }
+                else{
+                   db1.excecuteQuery("SELECT precio FROM colore WHERE color = '"+jComboBox1.getSelectedItem()+"' AND id_productoe_codigo = '"+jTextField1.getText()+"' AND id_productoe_id_cliente = '"+tel+"'"); 
+                }
+                
+                String precioUnidad = db1.getDato(0,0);
+                jTextField6.setText(precioUnidad);
+                jTextField4.setText(precioUnidad);
+            }
+        });
         setVisible(true);
         setTitle("Agregar producto");
         setLocationRelativeTo(null);
