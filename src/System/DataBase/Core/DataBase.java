@@ -580,6 +580,7 @@ public class DataBase extends Conexion {
         SQL += " WHERE " + id[0] + " = '" + id[1] + "'";
         messageSQL(SQL);
         return super.actualizar(SQL);
+        
     }
 
     //</editor-fold>
@@ -596,6 +597,10 @@ public class DataBase extends Conexion {
     public boolean delete(String tabla, Map<String, String> id) {
         String SQL = "DELETE FROM " + tabla + " WHERE ";
         SQL = where(SQL,id, new String[] {"AND"}, new String[]{"=","=","=","=","=","="});
+        messageSQL(SQL);
+        return super.actualizar(SQL);
+    }
+    public boolean delete2(String SQL) {
         messageSQL(SQL);
         return super.actualizar(SQL);
     }

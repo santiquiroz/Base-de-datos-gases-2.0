@@ -119,7 +119,7 @@ public class ClienteNuevo extends View implements IView{
 
         jLabel7.setText("Municipio");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "comun" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "comun", "empresarial" }));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -210,16 +210,15 @@ public class ClienteNuevo extends View implements IView{
             String fecha=jTextField3.getText();
             String puntos=jTextField4.getText();
             String comun, empresarial;
-            if (jComboBox1.getSelectedItem().equals("comun")) {
+            String type = (String) jComboBox1.getSelectedItem();
+            if (type.equals("comun")) {
                 comun = "1";empresarial="0";
             }
             else{
                 comun = "0";empresarial="1";
             }
-               
-            db.insertar3("INSERT INTO cliente (telefono,nombre,fecha_registro,puntos,empresarial,comun,id_municipio) VALUES ('"+telefono+"','"+nombre+"',CURRENT_DATE(),'"+comun+"','"+empresarial+"','0','"+jComboBox2.getSelectedItem()+"')");    
-            
-           
+            db=new DataBase();
+            db.insertar3("INSERT INTO cliente (telefono,nombre,fecha_registro,puntos,empresarial,comun,id_municipio) VALUES ('"+telefono+"','"+nombre+"',CURRENT_DATE(),'0','"+empresarial+"','"+comun+"','"+(String)jComboBox2.getSelectedItem()+"')");    
             new Pedido(telefono,usuario);
             this.dispose();
             

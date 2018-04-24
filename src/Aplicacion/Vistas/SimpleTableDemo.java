@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class SimpleTableDemo extends JPanel {
     private boolean DEBUG = false;
     String titulo;
-    JFrame ventanaPadre;
+    final JFrame ventanaPadre;
     String ventanaObjetivo;
     JTable tabla;
     
@@ -94,6 +94,17 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                             Object numero = tabla.getValueAt(row, 1);
                             new InfoPedido((String) puntero, (String) numero);
                             break;
+                        case "InfoProducto":
+                            Object identificadorMunicipioOCliente = tabla.getValueAt(row, 4);
+                             //new InfoProducto((String) puntero, (String) identificadorMunicipioOCliente ,(String)((Administrador)ventanaPadre).jComboBox8.getSelectedItem(),true);
+                            if (ventanaPadre instanceof Administrador){
+                                new InfoProducto((String) puntero, (String) identificadorMunicipioOCliente ,(String)((Administrador)ventanaPadre).jComboBox8.getSelectedItem(),true);
+                            }
+                            else if(ventanaPadre instanceof Comun){
+                                new InfoProducto((String) puntero, (String) identificadorMunicipioOCliente ,(String)((Administrador)ventanaPadre).jComboBox8.getSelectedItem(),false);
+                            }
+                            
+                            break;
                         default:
                             break;
                     }
@@ -121,9 +132,12 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                     
                     System.out.println("seleccionado"); //por si las moscas
                     System.out.println(datos);
-                    
+                    if(ventanaObjetivo.equals("Carrito")){
                         new carrito(datos,(Pedido) ventanaPadre,"busqueda");
-                    
+                    }
+                    else if(ventanaObjetivo.equals("InfoColor")){
+                        new InfoColor(datos,((InfoProducto)ventanaPadre).tipoproducto);
+                    }
                 }
             });
         }
@@ -133,7 +147,7 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
     
     public SimpleTableDemo() {
         super(new GridLayout(1,0));
-
+        ventanaPadre=new JFrame();
         String[] columnNames = {"First Name",
                                 "Last Name",
                                 "Sport",
