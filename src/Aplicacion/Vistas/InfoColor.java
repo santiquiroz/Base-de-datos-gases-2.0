@@ -76,7 +76,7 @@ public class InfoColor extends View implements IView{
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("INFORMACION DEL CLIENTE");
+        jLabel2.setText("INFORMACION DEL COLOR");
 
         jButton1.setText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -219,14 +219,14 @@ public class InfoColor extends View implements IView{
         }
         System.out.println(dis);
         if(tipoColor.equals("Empresarial")){
-            System.out.println("consulta:"+"UPDATE colore SET precio = '"+jTextField2.getText()+"',disponible = '"+dis+"' WHERE color = '"+jTextField1.getText()+"' AND id_productoe_codigo = '"+jTextField1.getText()+"' AND id_productoe_id_cliente = '"+jTextField4.getText()+"'");
+            System.out.println("consulta:"+"UPDATE colore SET precio = '"+jTextField2.getText()+"',disponible = '"+dis+"' WHERE color = '"+jTextField1.getText()+"' AND id_productoe_codigo = '"+jTextField3.getText()+"' AND id_productoe_id_cliente = '"+jTextField4.getText()+"'");
             db=new DataBase();
-            db.actualizar("UPDATE colore SET precio = '"+jTextField2.getText()+"',disponible = '"+dis+"' WHERE color = '"+jTextField1.getText()+"' AND id_productoe_codigo = '"+jTextField1.getText()+"' AND id_productoe_id_cliente = '"+jTextField4.getText()+"'");
+            db.actualizar("UPDATE colore SET precio = '"+jTextField2.getText()+"',disponible = '"+dis+"' WHERE color = '"+jTextField1.getText()+"' AND id_productoe_codigo = '"+jTextField3.getText()+"' AND id_productoe_id_cliente = '"+jTextField4.getText()+"'");
         }
         else{
-            System.out.println("consulta:"+"UPDATE colorm SET precio = '"+jTextField2.getText()+"',disponible = '"+dis+"' WHERE color = '"+jTextField1.getText()+"' AND id_productom_codigo = '"+jTextField1.getText()+"' AND id_productom_id_municipio ='"+jTextField4.getText()+"'");
+            System.out.println("consulta:"+"UPDATE colorm SET precio = '"+jTextField2.getText()+"',disponible = '"+dis+"' WHERE color = '"+jTextField1.getText()+"' AND id_productom_codigo = '"+jTextField3.getText()+"' AND id_productom_id_municipio ='"+jTextField4.getText()+"'");
             db=new DataBase();
-            db.actualizar("UPDATE colorm SET precio = '"+jTextField2.getText()+"',disponible = '"+dis+"' WHERE color = '"+jTextField1.getText()+"' AND id_productom_codigo = '"+jTextField1.getText()+"' AND id_productom_id_municipio ='"+jTextField4.getText()+"'");
+            db.actualizar("UPDATE colorm SET precio = '"+jTextField2.getText()+"',disponible = '"+dis+"' WHERE color = '"+jTextField1.getText()+"' AND id_productom_codigo = '"+jTextField3.getText()+"' AND id_productom_id_municipio ='"+jTextField4.getText()+"'");
         }
         this.dispose();    
              

@@ -76,7 +76,7 @@ public class carrito extends View implements IView{
                 colores = db.excecuteQuery("SELECT color FROM colorm WHERE disponible ='1' AND id_productom_codigo = '"+codigo+"' AND id_productom_id_municipio = '"+this.vPedido.idMunicipio+"'");
             }
             else{
-                colores = db.excecuteQuery("SELECT color FROM colore WHERE disponible ='1' AND id_productoe_codigo = '"+codigo+" AND id_producto2_id_cliente = '"+this.vPedido.telefono+"'");
+                colores = db.excecuteQuery("SELECT color FROM colore WHERE disponible ='1' AND id_productoe_codigo = '"+codigo+"' AND id_productoe_id_cliente = '"+this.vPedido.telefono+"'");
             }
             
         
@@ -90,11 +90,13 @@ public class carrito extends View implements IView{
         jComboBox1.setModel(modeloCombo2);
         db= new DataBase();
         if(this.vPedido.comun.equals("1")){
+            System.out.println("Entre a comun");
            db.excecuteQuery("SELECT precio FROM colorm WHERE color ='"+jComboBox1.getSelectedItem()+"' AND id_productom_codigo = '"+codigo+"' AND id_productom_id_municipio = '"+this.vPedido.idMunicipio+"'");
  
         }
         else{
-            db.excecuteQuery("SELECT precio FROM colore WHERE color ='"+jComboBox1.getSelectedItem()+"' AND id_productoe_codigo = '"+codigo+"' AND id_productom_id_cliente = '"+this.vPedido.telefono+"'");
+            System.out.println("Entre a empresarial");
+            db.excecuteQuery("SELECT precio FROM colore WHERE color ='"+jComboBox1.getSelectedItem()+"' AND id_productoe_codigo = '"+codigo+"' AND id_productoe_id_cliente = '"+this.vPedido.telefono+"'");
 
         }
         String precioBase = db.getDato(0,0);
@@ -352,6 +354,12 @@ public class carrito extends View implements IView{
             
             //actualizando puntos
             Double currentpuntos= Double.parseDouble(vPedido.jTextField17.getText()) + Double.parseDouble(puntos);
+            DataBase da = new DataBase();
+            da.excecuteQuery("SELECT limPuntosAcomulables FROM static");
+            Double limiteAcomulables =Double.parseDouble(da.getDato(0,0));
+            if((Double.parseDouble(vPedido.jTextField17.getText())+currentpuntos)>limiteAcomulables){
+                currentpuntos=limiteAcomulables;
+            }
             this.vPedido.jTextField17.setText((currentpuntos).toString());
             //actualizando precio bruto
             Double currentpreciobruto= Double.parseDouble(vPedido.jTextField20.getText()) + Double.parseDouble(precio);

@@ -2,6 +2,7 @@
 CREATE   TABLE static (
 codigo VARCHAR(20) PRIMARY KEY,
 limPuntos VARCHAR(20),
+limPuntosAcomulables VARCHAR(20),
 puntosxkilo VARCHAR(20),
 obsequio VARCHAR (80),
 puntos_descontados_por_obsequio VARCHAR(80)
@@ -131,4 +132,4 @@ PRIMARY KEY ( consecutivo,id_pedido_fecha,id_pedido_numero)
 
 
 ------------------------------------------------------insercion-------------------------------------------------------------
-INSERT INTO static(codigo, limPuntos,puntosxkilo,obsequio,puntos_descontados_por_obsequio) VALUES( '1','4320','80','','4320');
+INSERT INTO static(codigo, limPuntos,limPuntosAcomulables,puntosxkilo,obsequio,puntos_descontados_por_obsequio) VALUES( '1','4320','4320','80','','4320');

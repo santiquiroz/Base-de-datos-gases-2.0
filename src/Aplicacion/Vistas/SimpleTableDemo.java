@@ -1,4 +1,5 @@
 package Aplicacion.Vistas;
+import System.DataBase.Core.DataBase;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -69,8 +70,9 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
     public void setListener(String tipo,int num){
         System.out.println("entro a setListener");
         if(tipo.equals("soloIdentificador")){
+            System.out.println("listener de tipo solo identificador");
             tabla.addMouseListener(new MouseAdapter() {
-                
+            
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("entro a modificacion de listener");
@@ -116,6 +118,7 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
             });
         }
         else if(tipo.equals("todaLaFila")){
+            System.out.println("listener de tipo solo identificador");
             tabla.addMouseListener(new MouseAdapter() {
             
                 @Override
@@ -137,6 +140,15 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                     }
                     else if(ventanaObjetivo.equals("InfoColor")){
                         new InfoColor(datos,((InfoProducto)ventanaPadre).tipoproducto);
+                    }
+                    else if (ventanaObjetivo.equals("InfoClienteEdit")){
+                        DataBase df= new DataBase();
+                        String telefono = (String) datos.get(0);
+                        System.out.println("telefono"+telefono);
+                        ArrayList datoscliente= df .excecuteQuery("SELECT * FROM cliente WHERE telefono LIKE '"+telefono+"'");
+                        new InfoClienteEdit(datoscliente);
+                        
+                        
                     }
                 }
             });

@@ -281,7 +281,7 @@ public abstract class Conexion extends Datos {
             statement.close();
             miConexion.close();
             b1 = true;
-            MessageOption.success(0);
+            //MessageOption.success(0);
         } catch (SQLException | HeadlessException ex) {
             MessageOption.exit(0, false);
             b1 = false;
@@ -309,7 +309,7 @@ public abstract class Conexion extends Datos {
             statement.close();
             miConexion.close();
             b1 = true;
-            MessageOption.success(1);
+            //MessageOption.success(1);
         } catch (SQLException | HeadlessException ex) {
             MessageOption.exit(0, false);
             b1 = false;
