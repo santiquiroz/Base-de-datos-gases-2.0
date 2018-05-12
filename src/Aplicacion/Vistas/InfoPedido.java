@@ -80,7 +80,10 @@ public class InfoPedido extends View implements IView{
             ultimoObsequio=db.getDato(0,13);
             ultimoPuntosDescontadosPorObsequio=db.getDato(0,14);
             
-            jTextField5.setText(ultimoIdCliente);
+            db= new DataBase();
+            db.excecuteQuery("SELECT nombre FROM cliente WHERE telefono = '"+ultimoIdCliente+"'");
+            String fullCliente = ultimoIdCliente+"-"+db.getDato(0,0);
+            jTextField5.setText(fullCliente);
                     
             jTextField1.setText(fecha);
             
@@ -113,13 +116,7 @@ public class InfoPedido extends View implements IView{
             
             jTextField14.setText(ultimoCondonado);
             
-            jTextField16.setText(ultimoPuntos);
-            
-            jTextField15.setText(ultimoObsequio);
-            
-            jTextField28.setText(ultimoPuntosDescontadosPorObsequio);
-            
-            jTextField21.setText(ultimoPrecioTotal);
+            jTextField16.setText(ultimoPuntos);jTextField21.setText(ultimoPrecioTotal);
             
             jComboBox1.setSelectedItem(ultimoEstado);
             
@@ -182,8 +179,6 @@ public class InfoPedido extends View implements IView{
         jLabel16 = new javax.swing.JLabel();
         jTextField13 = new javax.swing.JTextField();
         jTextField14 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jTextField16 = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
@@ -194,7 +189,6 @@ public class InfoPedido extends View implements IView{
         jLabel26 = new javax.swing.JLabel();
         jTextField23 = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
-        jTextField28 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -287,15 +281,6 @@ public class InfoPedido extends View implements IView{
             }
         });
 
-        jLabel17.setText("Obsequio");
-
-        jTextField15.setEditable(false);
-        jTextField15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField15ActionPerformed(evt);
-            }
-        });
-
         jLabel18.setText("Puntos");
 
         jTextField16.setEditable(false);
@@ -331,13 +316,6 @@ public class InfoPedido extends View implements IView{
         });
 
         jLabel28.setText("Estado");
-
-        jTextField28.setEditable(false);
-        jTextField28.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField28ActionPerformed(evt);
-            }
-        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "en cola", "en proceso", "pago", "fiado" }));
 
@@ -435,7 +413,6 @@ public class InfoPedido extends View implements IView{
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel16)
                                     .addComponent(jLabel15)
-                                    .addComponent(jLabel17)
                                     .addComponent(jLabel18)
                                     .addComponent(jLabel23)
                                     .addComponent(jLabel28))
@@ -443,16 +420,13 @@ public class InfoPedido extends View implements IView{
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField13)
                                     .addComponent(jTextField14)
-                                    .addComponent(jTextField15)
                                     .addComponent(jTextField16)
                                     .addComponent(jTextField21)
-                                    .addComponent(jTextField28, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel26)
                                 .addGap(71, 71, 71)
-                                .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(72, 72, 72))
         );
         layout.setVerticalGroup(
@@ -470,19 +444,19 @@ public class InfoPedido extends View implements IView{
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -490,7 +464,7 @@ public class InfoPedido extends View implements IView{
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel26))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel15)
@@ -502,16 +476,9 @@ public class InfoPedido extends View implements IView{
                                 .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addGap(24, 24, 24)
-                                .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel18)
                             .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel23)
                             .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -519,17 +486,17 @@ public class InfoPedido extends View implements IView{
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel28)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel12)
-                        .addGap(22, 22, 22)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel11))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(45, 45, 45)
+                .addGap(18, 18, 18)
                 .addComponent(viejo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -571,10 +538,6 @@ public class InfoPedido extends View implements IView{
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField14ActionPerformed
 
-    private void jTextField15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField15ActionPerformed
-
     private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField16ActionPerformed
@@ -586,10 +549,6 @@ public class InfoPedido extends View implements IView{
     private void jTextField23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField23ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField23ActionPerformed
-
-    private void jTextField28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField28ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField28ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
@@ -620,7 +579,7 @@ public class InfoPedido extends View implements IView{
         String empleadonuevo = ((String)jComboBox2.getSelectedItem()).split("-")[1];
         db.actualizar("UPDATE pedido SET direccion = '"+jTextField3.getText()+"', nota = '"+jTextArea1.getText()+"', id_empleado ='"+empleadonuevo+"' ,estado = '"+estado+"' WHERE fecha = '"+ultimoFecha+"' AND numero = '"+ultimoNumero+"'");
         this.dispose();
-        new ImpresionTermica();
+        new ImpresionTermica(jTextField1.getText(),jTextField2.getText(),jTextField23.getText(),(String)jComboBox2.getSelectedItem(),jTextField11.getText(), jTextField3.getText(), jTextField4.getText(),jTextArea1.getText(),"productos",jTextField21.getText(),jTextField16.getText()).print();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
@@ -640,7 +599,6 @@ public class InfoPedido extends View implements IView{
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -657,12 +615,10 @@ public class InfoPedido extends View implements IView{
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField23;
-    private javax.swing.JTextField jTextField28;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;

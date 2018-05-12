@@ -323,14 +323,14 @@ public class carrito extends View implements IView{
         db= new DataBase();
         db.excecuteQuery("SELECT puntosxkilo FROM static");
         String puntosxkilo=db.getDato(0, 0);
-        String puntos = String.valueOf((Double.parseDouble(peso))*(Double.parseDouble(puntosxkilo)));
+        String puntos = String.valueOf((Float.parseFloat(peso))*(Float.parseFloat(puntosxkilo)));
         for (int i = 0; i < numerodeproductos; i++) {
             ArrayList producto = new ArrayList();
             ArrayList productoInsercion = new ArrayList();
             producto.add(codigo);
             int u=this.vPedido.productos.size();
             if(u>0){
-                producto.add((Integer.parseInt((((String)((ArrayList) this.vPedido.productos.get(u-1)).get(1))))+1)+"");
+                producto.add((Float.parseFloat((((String)((ArrayList) this.vPedido.productos.get(u-1)).get(1))))+1)+"");
             }
             else{
                 producto.add("1");
@@ -341,7 +341,7 @@ public class carrito extends View implements IView{
             producto.add(precio);
             this.vPedido.productos.add(producto);
             
-            productoInsercion.add(Integer.toString(i+1));
+            productoInsercion.add(Float.toString(i+1));
             productoInsercion.add(nombre);
             productoInsercion.add(color);
             productoInsercion.add(peso);
@@ -353,20 +353,20 @@ public class carrito extends View implements IView{
             this.vPedido.productosInsercion.add(productoInsercion);
             
             //actualizando puntos
-            Double currentpuntos= Double.parseDouble(vPedido.jTextField17.getText()) + Double.parseDouble(puntos);
+            float currentpuntos= Float.parseFloat(vPedido.jTextField17.getText()) + Float.parseFloat(puntos);
             DataBase da = new DataBase();
             da.excecuteQuery("SELECT limPuntosAcomulables FROM static");
-            Double limiteAcomulables =Double.parseDouble(da.getDato(0,0));
-            if((Double.parseDouble(vPedido.jTextField17.getText())+currentpuntos)>limiteAcomulables){
+            float limiteAcomulables =Float.parseFloat(da.getDato(0,0));
+            if((Float.parseFloat(vPedido.jTextField17.getText())+currentpuntos)>limiteAcomulables){
                 currentpuntos=limiteAcomulables;
             }
-            this.vPedido.jTextField17.setText((currentpuntos).toString());
+            this.vPedido.jTextField17.setText(currentpuntos+"");
             //actualizando precio bruto
-            Double currentpreciobruto= Double.parseDouble(vPedido.jTextField20.getText()) + Double.parseDouble(precio);
-            this.vPedido.jTextField20.setText((currentpreciobruto).toString());
+            float currentpreciobruto= Float.parseFloat(vPedido.jTextField20.getText()) + Float.parseFloat(precio);
+            this.vPedido.jTextField20.setText(currentpreciobruto+"");
             //actualizando precio neto
-            Double currentprecioneto= Double.parseDouble(vPedido.jTextField22.getText()) + Double.parseDouble(precio);
-            this.vPedido.jTextField22.setText((currentprecioneto).toString());
+            float currentprecioneto= Float.parseFloat(vPedido.jTextField22.getText()) + Float.parseFloat(precio);
+            this.vPedido.jTextField22.setText(currentprecioneto+"");
             
         }
        
