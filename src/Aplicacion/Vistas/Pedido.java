@@ -5,6 +5,7 @@ import Aplicacion.Controller.IndexController;
 import System.DataBase.Core.ConvertidorAMatriz;
 import System.DataBase.Core.DataBase;
 import System.Helper.IO;
+import System.Helper.ManejoDeStrings;
 import System.Impresion.ImpresionTermica;
 import System.MVC.Core.IView;
 import System.MVC.Core.View;
@@ -1345,8 +1346,18 @@ public class Pedido extends View implements IView{
          }
        }
         db.actualizar("UPDATE cliente SET puntos = '"+jTextField17.getText()+"' WHERE telefono LIKE '"+telefono+"'");
+        String stringProductos="|Nombre   |Color  |Peso|Precio    |\n";
+        int numprod = this.productosInsercion.size();
+        ManejoDeStrings ms = new ManejoDeStrings();
+        for (int i = 0; i < numprod; i++) {
+            stringProductos=stringProductos+ms.rellenar((ms.recortar((String)((ArrayList)productosInsercion.get(i)).get(1),0,10))," ",11,true)+ms.rellenar((ms.recortar((String)((ArrayList)productosInsercion.get(i)).get(2),0,7))," ",8,true)+ms.rellenar((ms.recortar((String)((ArrayList)productosInsercion.get(i)).get(3),0,4))," ",5,true)+ms.rellenar((ms.recortar((String)((ArrayList)productosInsercion.get(i)).get(4),0,10))," ",11,true)+"\n";
+        }
+        db= new DataBase();
+            db.excecuteQuery("SELECT nombre FROM cliente WHERE telefono = '"+telefono+"'");
+            String nombreCliente=db.getDato(0,0);
+        String nombreMensajero=((((String)jComboBox2.getSelectedItem()).split("-")))[0];
+        new ImpresionTermica(jTextField7.getText(),jTextField8.getText(),nombreMensajero,nombreCliente,telefono, jTextField6.getText(), jTextField12.getText(),jTextArea2.getText(),stringProductos,ms.rellenar(jTextField22.getText()," ",21,false),ms.rellenar(jTextField17.getText()," ",10,false)).print();
         
-        new ImpresionTermica();
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 

@@ -23,7 +23,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-
+import System.Helper.ManejoDeStrings;
 
 /**
  * Frame del pedido
@@ -47,6 +47,7 @@ public class InfoPedido extends View implements IView{
     private String ultimoObsequio;
     private String ultimoPuntosDescontadosPorObsequio;
     public ArrayList datosPedido;
+    private String nombreCliente;
 
    
     public InfoPedido(String fecha,String numero) {
@@ -82,8 +83,8 @@ public class InfoPedido extends View implements IView{
             
             db= new DataBase();
             db.excecuteQuery("SELECT nombre FROM cliente WHERE telefono = '"+ultimoIdCliente+"'");
-            String fullCliente = ultimoIdCliente+"-"+db.getDato(0,0);
-            jTextField5.setText(fullCliente);
+            nombreCliente=db.getDato(0,0);
+            jTextField5.setText(nombreCliente);
                     
             jTextField1.setText(fecha);
             
@@ -557,6 +558,7 @@ public class InfoPedido extends View implements IView{
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String estado = (String) jComboBox1.getSelectedItem();
         db= new DataBase();
+        
         String empleadonuevo = ((String)jComboBox2.getSelectedItem()).split("-")[1];
         db.actualizar("UPDATE pedido SET direccion = '"+jTextField3.getText()+"', nota = '"+jTextArea1.getText()+"', id_empleado ='"+empleadonuevo+"' ,estado = '"+estado+"' WHERE fecha = '"+ultimoFecha+"' AND numero = '"+ultimoNumero+"'");
         this.dispose();
@@ -576,10 +578,20 @@ public class InfoPedido extends View implements IView{
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String estado = (String) jComboBox1.getSelectedItem();
         db= new DataBase();
-        String empleadonuevo = ((String)jComboBox2.getSelectedItem()).split("-")[1];
+        String empleadonuevo = ((String)jComboBox2.getSelectedItem()).split("-")[0];
         db.actualizar("UPDATE pedido SET direccion = '"+jTextField3.getText()+"', nota = '"+jTextArea1.getText()+"', id_empleado ='"+empleadonuevo+"' ,estado = '"+estado+"' WHERE fecha = '"+ultimoFecha+"' AND numero = '"+ultimoNumero+"'");
+        
+        String nomCliente = this.nombreCliente;
+        String stringProductos="|Nombre   |Color  |Peso|Precio    |\n";
+        int numprod = this.ultimoProductos.size();
+        ManejoDeStrings ms = new ManejoDeStrings();
+        for (int i = 0; i < numprod; i++) {
+            stringProductos=stringProductos+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(2),0,10))," ",11,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(3),0,7))," ",8,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(4),0,4))," ",5,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(5),0,10))," ",11,true)+"\n";
+        }
+        String nombreMensajero=((((String)jComboBox2.getSelectedItem()).split("-")))[0];
+        new ImpresionTermica(jTextField1.getText(),jTextField2.getText(),nombreMensajero,nomCliente,jTextField11.getText(), jTextField3.getText(), jTextField4.getText(),jTextArea1.getText(),stringProductos,ms.rellenar(jTextField21.getText()," ",21,false),ms.rellenar(jTextField16.getText()," ",10,false)).print();
         this.dispose();
-        new ImpresionTermica(jTextField1.getText(),jTextField2.getText(),jTextField23.getText(),(String)jComboBox2.getSelectedItem(),jTextField11.getText(), jTextField3.getText(), jTextField4.getText(),jTextArea1.getText(),"productos",jTextField21.getText(),jTextField16.getText()).print();
+             
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed

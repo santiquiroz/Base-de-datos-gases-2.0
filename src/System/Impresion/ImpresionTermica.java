@@ -19,16 +19,16 @@ public class ImpresionTermica {
     "FECHA: {{date}}\n"+
     "NUMERO DE PEDIDO: {{numped}}\n"+
     "MENSAJERO: {{mensa}}\n"+
-    "================================================\n"+
+    "===================================\n"+
     "CLIENTE: {{client}}\n"+
     "TELEFONO: {{tel}}\n"+
     "DIRECCION:{{dir}}\n"+
     "MUNICIPIO:{{mun}}\n"+
     "NOTA:{{note}}\n"+
-    "================================================\n"+
+    "===================================\n"+
     "{{items}}\n"+
-    "================================================\n"+
-    "TOTAL A PAGAR: {{total}}\n"+
+    "===================================\n"+
+    "TOTAL A PAGAR:{{total}}\n"+
     "PUNTOS DESPUES DE COMPRA:{{puntos}}\n"+
     "\n \n";
     
@@ -43,6 +43,7 @@ public class ImpresionTermica {
     this.contenidoFactura = this.contenidoFactura.replace("{{mun}}", municipio);
     this.contenidoFactura = this.contenidoFactura.replace("{{note}}", nota);
     this.contenidoFactura = this.contenidoFactura.replace("{{items}}", productos);
+    this.contenidoFactura = this.contenidoFactura.replace("{{total}}", total);
     this.contenidoFactura = this.contenidoFactura.replace("{{puntos}}", puntos);
     
   }
