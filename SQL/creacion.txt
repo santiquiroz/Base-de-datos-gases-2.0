@@ -81,7 +81,8 @@ id_municipio VARCHAR(80),
 condonado VARCHAR(80),
 puntos VARCHAR (80),
 obsequio VARCHAR (80),
-puntos_descontados_por_obsequio	VARCHAR(80)
+puntos_descontados_por_obsequio	VARCHAR(80),
+bodega VARCHAR(10)
 );
 
 CREATE   TABLE productoexpedido(
