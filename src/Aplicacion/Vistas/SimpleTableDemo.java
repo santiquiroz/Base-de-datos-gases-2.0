@@ -93,7 +93,7 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                             new carrito((String) puntero,(Pedido) ventanaPadre);
                             break;
                         case "InfoPedido":
-                            Object numero = tabla.getValueAt(row, 1);
+                            Object numero = tabla.getValueAt(row, 2);
                             new InfoPedido((String) puntero, (String) numero);
                             break;
                         case "InfoProducto":

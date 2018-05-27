@@ -82,7 +82,8 @@ condonado VARCHAR(80),
 puntos VARCHAR (80),
 obsequio VARCHAR (80),
 puntos_descontados_por_obsequio	VARCHAR(80),
-bodega VARCHAR(10)
+bodega VARCHAR(10),
+horaRegistro VARCHAR(20)
 );
 
 CREATE   TABLE productoexpedido(

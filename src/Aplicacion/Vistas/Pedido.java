@@ -1155,7 +1155,7 @@ public class Pedido extends View implements IView{
        }
        
         db= new DataBase();
-        db.insertar3("INSERT INTO pedido(fecha,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio) VALUES('"+fechaActual+"','"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','ninguno','0.0')");
+        db.insertar3("INSERT INTO pedido(fecha,horaRegistro,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio) VALUES('"+fechaActual+"',(SELECT CURRENT_TIME()),'"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','ninguno','0.0')");
  
        int numeroInserciones = this.productosInsercion.size()-1;
        String consecutivoInsercion, nombreInsercion, colorInsercion,pesoInsercion,puntosInsercion,codigoInsercion,municipioInsercion,clienteInsercion,fechaInsercion,numeroInsercion;
