@@ -206,6 +206,8 @@ public class InfoPedido extends View implements IView{
         jLabel4 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel29 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox4 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -371,6 +373,15 @@ public class InfoPedido extends View implements IView{
 
         jLabel29.setText("Bodega");
 
+        jLabel5.setText("Numero de facturas");
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -381,15 +392,19 @@ public class InfoPedido extends View implements IView{
                         .addGap(372, 372, 372)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
+                        .addGap(180, 180, 180)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(jButton4)))
-                .addContainerGap(219, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(215, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -518,7 +533,9 @@ public class InfoPedido extends View implements IView{
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -603,7 +620,10 @@ public class InfoPedido extends View implements IView{
             stringProductos=stringProductos+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(2),0,10))," ",11,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(3),0,7))," ",8,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(4),0,4))," ",5,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(5),0,10))," ",11,true)+"\n";
         }
         String nombreMensajero=((((String)jComboBox2.getSelectedItem()).split("-")))[0];
-        new ImpresionTermica(jTextField1.getText(),jTextField2.getText(),nombreMensajero,nomCliente,jTextField11.getText(), jTextField3.getText(), jTextField4.getText(),jTextArea1.getText(),stringProductos,ms.rellenar(jTextField21.getText()," ",21,false),ms.rellenar(jTextField16.getText()," ",10,false)).print();
+        int numFacturas = Integer.parseInt((String)jComboBox4.getSelectedItem());
+        for (int i = 0; i < numFacturas; i++) {
+            new ImpresionTermica(jTextField1.getText(),jTextField2.getText(),nombreMensajero,nomCliente,jTextField11.getText(), jTextField3.getText(), jTextField4.getText(),jTextArea1.getText(),stringProductos,ms.rellenar(jTextField21.getText()," ",21,false),ms.rellenar(jTextField16.getText()," ",10,false)).print();
+        }
         this.dispose();
              
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -611,6 +631,10 @@ public class InfoPedido extends View implements IView{
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox4ActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -621,6 +645,7 @@ public class InfoPedido extends View implements IView{
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -635,6 +660,7 @@ public class InfoPedido extends View implements IView{
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;

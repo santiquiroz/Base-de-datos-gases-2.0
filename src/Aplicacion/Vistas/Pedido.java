@@ -216,10 +216,10 @@ public class Pedido extends View implements IView{
         }
         else{ 
             db=new DataBase();
-            date = db.excecuteQuery("SELECT * FROM pedido WHERE fecha = (SELECT CURRENT_DATE())AND numero LIKE (SELECT MAX(numero) FROM (SELECT * FROM pedido WHERE fecha = (SELECT CURRENT_DATE())) AS pedidoshoy)");
+            date = db.excecuteQuery("SELECT * FROM pedido WHERE fecha = (SELECT CURRENT_DATE())AND numero LIKE (SELECT MAX(num) FROM (SELECT CAST(numero AS INTEGER) AS num FROM pedido WHERE fecha = (SELECT CURRENT_DATE())) AS pedidoshoy)");
             ArrayList newdate =  (ArrayList) date.get(date.size()-1);
-            float orden = Float.parseFloat((String) newdate.get(1))+1;
-            jTextField8.setText(Float.toString(orden));
+            int orden = Integer.parseInt((String) newdate.get(1))+1;
+            jTextField8.setText(Integer.toString(orden));
         }
         db= new DataBase();
             ArrayList empleados = db.excecuteQuery("SELECT cedula, nombre FROM empleado");
@@ -375,6 +375,10 @@ public class Pedido extends View implements IView{
         jTextField12 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jTextField31 = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jComboBox6 = new javax.swing.JComboBox<>();
+        jLabel31 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -780,6 +784,15 @@ public class Pedido extends View implements IView{
             }
         });
 
+        jLabel30.setText("Bodega:");
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        jComboBox6.setSelectedIndex(1);
+
+        jLabel31.setText("Numero de facturas:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -900,8 +913,17 @@ public class Pedido extends View implements IView{
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel30)
+                                            .addComponent(jLabel31))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jComboBox6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
@@ -932,7 +954,7 @@ public class Pedido extends View implements IView{
                             .addComponent(jLabel3)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -993,7 +1015,16 @@ public class Pedido extends View implements IView{
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel30)
+                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel31))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1147,7 +1178,7 @@ public class Pedido extends View implements IView{
        String c = (String)jComboBox2.getSelectedItem();
        String[] d = c.split("-");
        String cedulaEmpleado = d[1];
-       
+       String bodega = (String)jComboBox4.getSelectedItem();
        String tipoInsercion = "empresarial";
        
        if(comun.equals("1")){
@@ -1155,7 +1186,7 @@ public class Pedido extends View implements IView{
        }
        
         db= new DataBase();
-        db.insertar3("INSERT INTO pedido(fecha,horaRegistro,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio) VALUES('"+fechaActual+"',(SELECT CURRENT_TIME()),'"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','ninguno','0.0')");
+        db.insertar3("INSERT INTO pedido(fecha,horaRegistro,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio, bodega) VALUES('"+fechaActual+"',(SELECT CURRENT_TIME()),'"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','ninguno','0.0','"+bodega+"')");
  
        int numeroInserciones = this.productosInsercion.size()-1;
        String consecutivoInsercion, nombreInsercion, colorInsercion,pesoInsercion,puntosInsercion,codigoInsercion,municipioInsercion,clienteInsercion,fechaInsercion,numeroInsercion;
@@ -1299,6 +1330,7 @@ public class Pedido extends View implements IView{
        String c = (String)jComboBox2.getSelectedItem();
        String[] d = c.split("-");
        String cedulaEmpleado = d[1];
+       String bodega = (String)jComboBox4.getSelectedItem();
        
        String tipoInsercion = "empresarial";
        
@@ -1307,7 +1339,7 @@ public class Pedido extends View implements IView{
        }
        
         db= new DataBase();
-        db.insertar3("INSERT INTO pedido(fecha,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio) VALUES('"+fechaActual+"','"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','ninguno','0.0')");
+        db.insertar3("INSERT INTO pedido(fecha,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio,bodega) VALUES('"+fechaActual+"','"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','ninguno','0.0','"+bodega+"')");
  
        int numeroInserciones = this.productosInsercion.size()-1;
        String consecutivoInsercion, nombreInsercion, colorInsercion,pesoInsercion,puntosInsercion,codigoInsercion,municipioInsercion,clienteInsercion,fechaInsercion,numeroInsercion;
@@ -1356,7 +1388,11 @@ public class Pedido extends View implements IView{
             db.excecuteQuery("SELECT nombre FROM cliente WHERE telefono = '"+telefono+"'");
             String nombreCliente=db.getDato(0,0);
         String nombreMensajero=((((String)jComboBox2.getSelectedItem()).split("-")))[0];
-        new ImpresionTermica(jTextField7.getText(),jTextField8.getText(),nombreMensajero,nombreCliente,telefono, jTextField6.getText(), jTextField12.getText(),jTextArea2.getText(),stringProductos,ms.rellenar(jTextField22.getText()," ",21,false),ms.rellenar(jTextField17.getText()," ",10,false)).print();
+        //imprimiendo facturas
+        int numFacturas=Integer.parseInt((String)jComboBox6.getSelectedItem());
+        for (int i = 0; i < numFacturas; i++) {
+           new ImpresionTermica(jTextField7.getText(),jTextField8.getText(),nombreMensajero,nombreCliente,telefono, jTextField6.getText(), jTextField12.getText(),jTextArea2.getText(),stringProductos,ms.rellenar(jTextField22.getText()," ",21,false),ms.rellenar(jTextField17.getText()," ",10,false)).print();
+        }
         
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -1375,7 +1411,9 @@ public class Pedido extends View implements IView{
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1398,6 +1436,8 @@ public class Pedido extends View implements IView{
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
