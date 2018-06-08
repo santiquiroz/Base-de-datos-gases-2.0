@@ -77,8 +77,7 @@ public class Administrador extends View implements IView{
             }
         });
         pedidosHoy = new ArrayList();   //Pare guardarlos antes de ponerlos en el jpanel
-        //myTimer.scheduleAtFixedRate(task,1000,8000);
-        myTimer.scheduleAtFixedRate(task,500,1000);
+        myTimer.scheduleAtFixedRate(task,1000,8000);
         
         
     }
@@ -200,6 +199,7 @@ public class Administrador extends View implements IView{
         jComboBox7 = new javax.swing.JComboBox<>();
         jLabel35 = new javax.swing.JLabel();
         jTextField35 = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
         jPanel23 = new javax.swing.JPanel();
         jTabbedPane8 = new javax.swing.JTabbedPane();
         jPanel24 = new javax.swing.JPanel();
@@ -1208,7 +1208,7 @@ public class Administrador extends View implements IView{
             }
         });
 
-        jLabel35.setText("ID Cliente");
+        jLabel35.setText("Poseedor");
 
         jTextField35.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1254,24 +1254,28 @@ public class Administrador extends View implements IView{
                                     .addComponent(jTextField35)
                                     .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 189, Short.MAX_VALUE))
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel33)
-                            .addComponent(jLabel46))
-                        .addGap(191, 191, 191)
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField32)
-                            .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(200, Short.MAX_VALUE))
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel33)
+                                    .addComponent(jLabel46))
+                                .addGap(191, 191, 191)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField32)
+                                    .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel14Layout.createSequentialGroup()
+                                .addGap(147, 147, 147)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1302,7 +1306,9 @@ public class Administrador extends View implements IView{
                     .addComponent(jLabel31))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addGap(49, 49, 49)
+                .addGap(21, 21, 21)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel34)
                     .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -2142,7 +2148,7 @@ public class Administrador extends View implements IView{
                 cabecera[10]="bodega";
                 
         db = new DataBase();
-            pedidosHoy = db.excecuteQuery("SELECT fecha,horaRegistro, numero, id_cliente, direccion, id_municipio, precio_total, id_empleado, tipo, estado, bodega FROM pedido WHERE (fecha LIKE '"+jTextField34.getText()+"%' AND horaRegistro LIKE '"+jTextField52.getText()+"%' AND numero LIKE '"+jTextField42.getText()+"%'AND direccion LIKE '"+jTextField43.getText()+"%' AND precio_total LIKE '"+jTextField44.getText()+"%' AND estado LIKE '"+jTextField49.getText()+"%' AND id_empleado LIKE '"+jTextField45.getText()+"%' AND id_cliente LIKE '"+jTextField46.getText()+"%' AND tipo LIKE '"+jTextField47.getText()+"%' AND id_municipio LIKE '"+jTextField48.getText()+"%' AND bodega LIKE '"+jTextField53.getText()+"%')");
+            pedidosHoy = db.excecuteQuery("SELECT fecha,horaRegistro, numero, id_cliente, direccion, id_municipio, precio_total, id_empleado, tipo, estado, bodega FROM pedido WHERE (fecha LIKE '"+jTextField34.getText()+"%' AND horaRegistro LIKE '"+jTextField52.getText()+"%' AND numero LIKE '"+jTextField42.getText()+"%'AND direccion LIKE '"+jTextField43.getText()+"%' AND precio_total LIKE '"+jTextField44.getText()+"%' AND estado LIKE '"+jTextField49.getText()+"%' AND id_empleado LIKE '"+jTextField45.getText()+"%' AND id_cliente LIKE '"+jTextField46.getText()+"%' AND tipo LIKE '"+jTextField47.getText()+"%' AND id_municipio LIKE '"+jTextField48.getText()+"%' AND bodega LIKE '"+jTextField53.getText()+"%') ORDER BY fecha DESC, horaRegistro ASC");
             if(!db.isEmpty()){
                 db=new DataBase();
                 //obteniendo los pedidos de hoy
@@ -3443,6 +3449,7 @@ public class Administrador extends View implements IView{
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;

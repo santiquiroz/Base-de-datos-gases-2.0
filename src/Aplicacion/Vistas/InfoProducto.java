@@ -80,10 +80,19 @@ public class InfoProducto extends View implements IView{
                 cabecera[2]="disponible";
                 cabecera[3]="codigo de producto";
                 cabecera[4]="municipio";
-                viejoSQL= new SimpleTableDemo(cabecera,new Object [0][5],"colores","InfoColor",this,"todaLaFila");
+                if(editable==true){
+                    viejoSQL= new SimpleTableDemo(cabecera,new Object [0][5],"colores","InfoColor",this,"todaLaFila");
+                }
+                else{
+                    viejoSQL= new SimpleTableDemo(cabecera,new Object [0][5],"colores","InfoColorNoEdit",this,"todaLaFila");
+                }
                 if(!db.isEmpty()){
-                     viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(colores,5).result(),"colores","InfoColor",this,"todaLaFila");
-
+                     if(editable==true){
+                        viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(colores,5).result(),"colores","InfoColor",this,"todaLaFila");
+                     }
+                     else{
+                         viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(colores,5).result(),"colores","InfoColorNoEdit",this,"todaLaFila");
+                     }
                 }
             }
             else{
@@ -100,7 +109,13 @@ public class InfoProducto extends View implements IView{
                 cabecera[4]="cliente";
                 viejoSQL= new SimpleTableDemo(cabecera,new Object [0][5],"colores","InfoColor",this,"todaLaFila");
                 if(!db.isEmpty()){
-                     viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(colores,5).result(),"colores","InfoColor",this,"todaLaFila");
+                    if(editable){
+                        viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(colores,5).result(),"colores","InfoColor",this,"todaLaFila");
+                    }
+                    else{
+                        viejoSQL= new SimpleTableDemo(cabecera,new ConvertidorAMatriz(colores,5).result(),"colores","InfoColorNoEdit",this,"todaLaFila");
+                    }
+                    
                 }
             }
             //llenando datos del producto
@@ -120,7 +135,13 @@ public class InfoProducto extends View implements IView{
             frame.setVisible(true);
             viejo.repaint();
             viejo.setVisible(true);
-        
+        if(editable==false){
+            jTextField1.setEditable(false);
+            jTextField2.setEditable(false);
+            jComboBox1.setEditable(false);
+            jButton3.setEnabled(false);
+            jButton2.setEnabled(false);
+        }
        try {
            frame.setMaximum(true);
        } catch (PropertyVetoException ex) {

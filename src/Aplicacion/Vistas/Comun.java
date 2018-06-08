@@ -62,13 +62,12 @@ public class Comun extends View implements IView{
         jTextField2.setText(nick);
         jTextField3.setText(db.getDato(0,1));
         setVisible(true);
-        setTitle("Ventana de administrador");
+        setTitle("Ventana de usuario comun");
         setLocationRelativeTo(null);
 
-       
+ 
         pedidosHoy = new ArrayList();   //Pare guardarlos antes de ponerlos en el jpanel
-        //myTimer.scheduleAtFixedRate(task,1000,8000);
-        myTimer.scheduleAtFixedRate(task,500,1000);
+        myTimer.scheduleAtFixedRate(task,1000,8000);
         
         
     }
@@ -1314,7 +1313,7 @@ public class Comun extends View implements IView{
                 cabecera[10]="bodega";
                 
         db = new DataBase();
-            pedidosHoy = db.excecuteQuery("SELECT fecha,horaRegistro, numero, id_cliente, direccion, id_municipio, precio_total, id_empleado, tipo, estado, bodega FROM pedido WHERE (fecha LIKE '"+jTextField34.getText()+"%' AND horaRegistro LIKE '"+jTextField52.getText()+"%' AND numero LIKE '"+jTextField42.getText()+"%'AND direccion LIKE '"+jTextField43.getText()+"%' AND precio_total LIKE '"+jTextField44.getText()+"%' AND estado LIKE '"+jTextField49.getText()+"%' AND id_empleado LIKE '"+jTextField45.getText()+"%' AND id_cliente LIKE '"+jTextField46.getText()+"%' AND tipo LIKE '"+jTextField47.getText()+"%' AND id_municipio LIKE '"+jTextField48.getText()+"%' AND bodega LIKE '"+jTextField53.getText()+"%')");
+            pedidosHoy = db.excecuteQuery("SELECT fecha,horaRegistro, numero, id_cliente, direccion, id_municipio, precio_total, id_empleado, tipo, estado, bodega FROM pedido WHERE (fecha LIKE '"+jTextField34.getText()+"%' AND horaRegistro LIKE '"+jTextField52.getText()+"%' AND numero LIKE '"+jTextField42.getText()+"%'AND direccion LIKE '"+jTextField43.getText()+"%' AND precio_total LIKE '"+jTextField44.getText()+"%' AND estado LIKE '"+jTextField49.getText()+"%' AND id_empleado LIKE '"+jTextField45.getText()+"%' AND id_cliente LIKE '"+jTextField46.getText()+"%' AND tipo LIKE '"+jTextField47.getText()+"%' AND id_municipio LIKE '"+jTextField48.getText()+"%' AND bodega LIKE '"+jTextField53.getText()+"%') ORDER BY fecha DESC, horaRegistro ASC");
             if(!db.isEmpty()){
                 db=new DataBase();
                 //obteniendo los pedidos de hoy
@@ -1423,9 +1422,15 @@ public class Comun extends View implements IView{
         }
     }
     
+   
+    
     
     
    
+  
+    
+    
+    
     
     private void BuscarProducto(){
         this.prod.removeAll();
@@ -1640,6 +1645,7 @@ public class Comun extends View implements IView{
         jComboBox3.setSelectedIndex(0);
     }
     
+ 
         
     private void RealizarPago(){
         boolean b1 = IO.textfield_requerido(jTextField11,jTextField10);
@@ -1657,6 +1663,7 @@ public class Comun extends View implements IView{
     }
     
    
+    
     public void registrarCliente(){
         boolean b1 = IO.textfield_requerido(jTextField50);
         if(b1){

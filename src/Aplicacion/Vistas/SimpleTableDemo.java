@@ -96,6 +96,7 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                             Object numero = tabla.getValueAt(row, 2);
                             new InfoPedido((String) puntero, (String) numero);
                             break;
+                        
                         case "InfoProducto":
                             Object identificadorMunicipioOCliente = tabla.getValueAt(row, 4);
                              //new InfoProducto((String) puntero, (String) identificadorMunicipioOCliente ,(String)((Administrador)ventanaPadre).jComboBox8.getSelectedItem(),true);
@@ -103,7 +104,7 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                                 new InfoProducto((String) puntero, (String) identificadorMunicipioOCliente ,(String)((Administrador)ventanaPadre).jComboBox8.getSelectedItem(),true);
                             }
                             else if(ventanaPadre instanceof Comun){
-                                new InfoProducto((String) puntero, (String) identificadorMunicipioOCliente ,(String)((Administrador)ventanaPadre).jComboBox8.getSelectedItem(),false);
+                                new InfoProducto((String) puntero, (String) identificadorMunicipioOCliente ,(String)((Comun)ventanaPadre).jComboBox8.getSelectedItem(),false);
                             }
                             
                             break;
@@ -140,6 +141,9 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                     }
                     else if(ventanaObjetivo.equals("InfoColor")){
                         new InfoColor(datos,((InfoProducto)ventanaPadre).tipoproducto);
+                    }
+                    else if(ventanaObjetivo.equals("InfoColorNoEdit")){
+                        new InfoColorNoEdit(datos,((InfoProducto)ventanaPadre).tipoproducto);
                     }
                     else if (ventanaObjetivo.equals("InfoClienteEdit")){
                         DataBase df= new DataBase();
