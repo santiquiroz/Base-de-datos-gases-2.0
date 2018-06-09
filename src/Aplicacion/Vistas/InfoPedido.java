@@ -103,8 +103,10 @@ public class InfoPedido extends View implements IView{
             jTextField11.setText(ultimoIdCliente);
             
             jComboBox3.setSelectedItem(ultimoBodega);
-            
-             db= new DataBase();
+            db= new DataBase();
+            db.excecuteQuery("SELECT nombre FROM empleado WHERE cedula LIKE '"+ultimoIdEmpleado+"'");
+            String ultimoNombreEmpleado = db.getDato(0,0);
+            db= new DataBase();
             ArrayList empleados = db.excecuteQuery("SELECT cedula, nombre FROM empleado");
         
             jComboBox2.removeAllItems();
@@ -115,7 +117,8 @@ public class InfoPedido extends View implements IView{
                 modeloCombo2.addElement(emp.get(1)+"-"+emp.get(0));
             }
         jComboBox2.setModel(modeloCombo2);
-            jComboBox2.setSelectedItem(ultimoIdEmpleado);
+        
+            jComboBox2.setSelectedItem(ultimoNombreEmpleado+"-"+ultimoIdEmpleado);
             
             jTextField23.setText(ultimoIdUsuario);
             
@@ -358,8 +361,6 @@ public class InfoPedido extends View implements IView{
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jTextField5.setEditable(false);
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -590,7 +591,7 @@ public class InfoPedido extends View implements IView{
         String estado = (String) jComboBox1.getSelectedItem();
         db= new DataBase();
         
-        String empleadonuevo = ((String)jComboBox2.getSelectedItem()).split("-")[1];
+        String empleadonuevo = ((String)jComboBox2.getSelectedItem()).split("-")[0];
         db.actualizar("UPDATE pedido SET direccion = '"+jTextField3.getText()+"', nota = '"+jTextArea1.getText()+"', id_empleado ='"+empleadonuevo+"' ,estado = '"+estado+"',bodega = '"+jComboBox3.getSelectedItem()+"' WHERE fecha = '"+ultimoFecha+"' AND numero = '"+ultimoNumero+"'");
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
