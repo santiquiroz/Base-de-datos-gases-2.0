@@ -950,11 +950,12 @@ public class Pedido extends View implements IView{
                             .addComponent(jLabel10)
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -1326,12 +1327,11 @@ public class Pedido extends View implements IView{
     }//GEN-LAST:event_jTextField12ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-             // obteniendo empleado selecto
+      // obteniendo empleado selecto
        String c = (String)jComboBox2.getSelectedItem();
        String[] d = c.split("-");
        String cedulaEmpleado = d[1];
        String bodega = (String)jComboBox4.getSelectedItem();
-       
        String tipoInsercion = "empresarial";
        
        if(comun.equals("1")){
@@ -1339,7 +1339,7 @@ public class Pedido extends View implements IView{
        }
        
         db= new DataBase();
-        db.insertar3("INSERT INTO pedido(fecha,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio,bodega) VALUES('"+fechaActual+"','"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','ninguno','0.0','"+bodega+"')");
+        db.insertar3("INSERT INTO pedido(fecha,horaRegistro,numero,direccion,nota,precio_total,estado,id_usuario,id_empleado,id_cliente,tipo,id_municipio,condonado,puntos,obsequio,puntos_descontados_por_obsequio, bodega) VALUES('"+fechaActual+"',(SELECT CURRENT_TIME()),'"+jTextField8.getText()+"','"+jTextField6.getText()+"','"+jTextArea2.getText()+"','"+jTextField22.getText()+"','"+jComboBox3.getSelectedItem()+"','"+this.usuario+"','"+cedulaEmpleado+"','"+telefono+"','"+tipoInsercion+"','"+jTextField12.getText()+"','"+jTextField19.getText()+"','"+jTextField17.getText()+"','ninguno','0.0','"+bodega+"')");
  
        int numeroInserciones = this.productosInsercion.size()-1;
        String consecutivoInsercion, nombreInsercion, colorInsercion,pesoInsercion,puntosInsercion,codigoInsercion,municipioInsercion,clienteInsercion,fechaInsercion,numeroInsercion;
@@ -1349,7 +1349,7 @@ public class Pedido extends View implements IView{
        if(comun.equals("1")){
         if(numeroInserciones >= 0)
          for (int i = 0; i <= numeroInserciones; i++) {
-            ArrayList producto= (ArrayList)productosInsercion.get(i);
+             ArrayList producto= (ArrayList)productosInsercion.get(i);
             consecutivoInsercion = (String)producto.get(0);
             nombreInsercion = (String)producto.get(1);
             colorInsercion = (String)producto.get(2);
@@ -1374,7 +1374,7 @@ public class Pedido extends View implements IView{
             codigoInsercion = (String)producto.get(6);
             clienteInsercion = telefono;
              db= new DataBase();
-             db.insertar3("INSERT INTO productoexpedido(consecutivo,nombre,color,peso,precio,puntos,id_productoe_codigo,id_productoe_id_cliente,id_pedido_fecha,id_pedido_numero) VALUES('"+consecutivoInsercion+"','"+nombreInsercion+"','"+colorInsercion+"','"+pesoInsercion+"','"+puntosInsercion+"','"+codigoInsercion+"','"+clienteInsercion+"','"+fechaInsercion+"','"+numeroInsercion+"')");
+             db.insertar3("INSERT INTO productoexpedido(consecutivo,nombre,color,peso,precio,puntos,id_productoe_codigo,id_productoe_id_cliente,id_pedido_fecha,id_pedido_numero) VALUES('"+(i+1)+"','"+nombreInsercion+"','"+colorInsercion+"','"+pesoInsercion+"','"+precioInsercion+"','"+puntosInsercion+"','"+codigoInsercion+"','"+clienteInsercion+"','"+fechaInsercion+"','"+numeroInsercion+"')");
          }
        }
         db.actualizar("UPDATE cliente SET puntos = '"+jTextField17.getText()+"' WHERE telefono LIKE '"+telefono+"'");
