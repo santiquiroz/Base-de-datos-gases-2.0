@@ -769,7 +769,7 @@ public class Comun extends View implements IView{
         );
         prodLayout.setVerticalGroup(
             prodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
+            .addGap(0, 296, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -847,7 +847,7 @@ public class Comun extends View implements IView{
                 .addComponent(jButton12)
                 .addGap(18, 18, 18)
                 .addComponent(prod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Buscar Producto", jPanel16);

@@ -1032,7 +1032,7 @@ public class Administrador extends View implements IView{
         );
         prodLayout.setVerticalGroup(
             prodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGap(0, 292, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -1110,7 +1110,7 @@ public class Administrador extends View implements IView{
                 .addComponent(jButton12)
                 .addGap(31, 31, 31)
                 .addComponent(prod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Buscar Producto", jPanel16);

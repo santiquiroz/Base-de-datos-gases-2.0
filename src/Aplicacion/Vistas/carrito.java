@@ -62,7 +62,7 @@ public class carrito extends View implements IView{
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         codigo=(String)datos.get(0);
         nombre=(String)datos.get(1);
-        peso=(String)datos.get(2);
+        peso=((String)datos.get(2)).replaceAll("\\D+","");
         ti=(String)datos.get(3);
         jTextField1.setText(codigo);
         jTextField2.setText(nombre);
@@ -100,8 +100,8 @@ public class carrito extends View implements IView{
 
         }
         String precioBase = db.getDato(0,0);
-        jTextField6.setText(precioBase);
-        jTextField4.setText(precioBase);
+        jTextField6.setText(precioBase.replaceAll("\\D+",""));
+        jTextField4.setText(precioBase.replaceAll("\\D+",""));
         
         jComboBox1.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent e){
@@ -114,8 +114,8 @@ public class carrito extends View implements IView{
                 }
                 
                 String precioUnidad = db1.getDato(0,0);
-                jTextField6.setText(precioUnidad);
-                jTextField4.setText(precioUnidad);
+                jTextField6.setText(precioUnidad.replaceAll("\\D+",""));
+                jTextField4.setText(precioUnidad.replaceAll("\\D+",""));
             }
         });
         setVisible(true);
@@ -319,11 +319,18 @@ public class carrito extends View implements IView{
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         int numerodeproductos = (int)jSpinner1.getValue();
         String color = (String) jComboBox1.getSelectedItem();
-        String precio = (String) jTextField4.getText();
+        String precio = ((String) jTextField4.getText()).replaceAll("\\D+","");
         db= new DataBase();
         db.excecuteQuery("SELECT puntosxkilo FROM static");
         String puntosxkilo=db.getDato(0, 0);
-        String puntos = String.valueOf((Float.parseFloat(peso))*(Float.parseFloat(puntosxkilo)));
+        String puntos;
+        if (ti.equals("Liquido")) {
+            puntos= String.valueOf((Float.parseFloat(peso))*(Float.parseFloat(puntosxkilo)));
+        
+        }
+        else{
+            puntos="0.0";
+        }
         for (int i = 0; i < numerodeproductos; i++) {
             ArrayList producto = new ArrayList();
             ArrayList productoInsercion = new ArrayList();
