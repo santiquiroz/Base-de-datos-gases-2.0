@@ -597,6 +597,17 @@ public class InfoPedido extends View implements IView{
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //disminuyendo puntos al cliente si el pedido aun no estaba pago
+        if (!((String)jComboBox1.getSelectedItem()).equals("pago")) {
+            db = new DataBase();
+            db.excecuteQuery("SELECT puntos FROM cliente WHERE telefono LIKE '"+ultimoIdCliente+"'");
+            float puntosActuales=Float.parseFloat(db.getDato(0,0));
+            float pun = puntosActuales - Float.parseFloat(jTextField16.getText()); 
+            db= new DataBase();
+            db.actualizar("UPDATE cliente SET puntos ='"+pun+"' WHERE telefono LIKE '"+ultimoIdCliente+"'");
+        }
+        
+        //borrando pedido y sus detalles
         db= new DataBase();
         db.delete2("DELETE FROM pedido WHERE fecha = '"+ultimoFecha+"' AND numero = '"+ultimoNumero+"'");
         db = new DataBase();

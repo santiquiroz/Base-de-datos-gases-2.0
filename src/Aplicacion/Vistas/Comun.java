@@ -5,6 +5,7 @@ import Aplicacion.Controller.IndexController;
 import System.DataBase.Core.ConvertidorAMatriz;
 import System.DataBase.Core.DataBase;
 import System.Helper.IO;
+import System.Impresion.ImpresionTermica;
 import System.MVC.Core.IView;
 import System.MVC.Core.View;
 import java.awt.event.ActionEvent;
@@ -119,6 +120,8 @@ public class Comun extends View implements IView{
         jButton13 = new javax.swing.JButton();
         jTextField10 = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
+        jComboBox12 = new javax.swing.JComboBox<>();
+        jLabel69 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jTextField18 = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
@@ -531,29 +534,41 @@ public class Comun extends View implements IView{
             }
         });
 
+        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        jComboBox12.setSelectedIndex(2);
+        jComboBox12.setToolTipText("");
+
+        jLabel69.setText("Numero de facturas de pago");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(237, 237, 237)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel14))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel14))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jButton13)
+                                .addGap(39, 39, 39)))
                         .addGap(41, 41, 41)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField11)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton13)
-                        .addGap(86, 86, 86)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextField11)
+                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel69)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,9 +583,13 @@ public class Comun extends View implements IView{
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
-                .addGap(46, 46, 46)
-                .addComponent(jButton13)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton13)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel69)))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Realizar Pago Empleado", jPanel7);
@@ -1651,11 +1670,28 @@ public class Comun extends View implements IView{
         boolean b1 = IO.textfield_requerido(jTextField11,jTextField10);
 
         if(b1){
-            String cedula= jTextField11.getText();
+        String cedula= jTextField11.getText();
             String cantidad= jTextField10.getText();
             db = new DataBase();
             db.insertar3("INSERT INTO pago (fechahora,id_usuario,id_empleado,monto) VALUES ((SELECT now()),'"+this.nickUsuario2+"', '"+cedula+"', '"+cantidad+"')");
-           
+            String idUsuario=this.nickUsuario2;
+            String nombreUsuario= (String)((ArrayList)((new DataBase()).excecuteQuery("SELECT nombre FROM usuario WHERE nick LIKE '"+this.nickUsuario2+"'")).get(0)).get(0);
+            String idEmpleado=cedula;
+            String nombreEmpleado=(String)((ArrayList)((new DataBase()).excecuteQuery("SELECT nombre FROM empleado WHERE cedula LIKE '"+cedula+"'")).get(0)).get(0);
+            String montoPago=jTextField10.getText();
+            String fechaActual = (String)((ArrayList)((new DataBase()).excecuteQuery("SELECT NOW()")).get(0)).get(0);
+            
+            ArrayList datospago = new ArrayList();
+            datospago.add(idUsuario);
+            datospago.add(nombreUsuario);
+            datospago.add(idEmpleado);
+            datospago.add(nombreEmpleado);
+            datospago.add(montoPago);
+            datospago.add(fechaActual);
+            int numFacPago = Integer.parseInt((String)jComboBox12.getSelectedItem());
+            for (int i = 0; i < numFacPago; i++) {
+                new ImpresionTermica("pago empleado",datospago).print();
+            } 
         }
         else{
             JOptionPane.showMessageDialog(null, "Llene todos los campos");
@@ -1927,6 +1963,7 @@ public class Comun extends View implements IView{
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox11;
+    private javax.swing.JComboBox<String> jComboBox12;
     public javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox5;
     public javax.swing.JComboBox<String> jComboBox8;
@@ -1971,6 +2008,7 @@ public class Comun extends View implements IView{
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel73;
     private javax.swing.JPanel jPanel1;

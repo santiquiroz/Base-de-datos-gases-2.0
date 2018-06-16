@@ -2,6 +2,7 @@ package System.Impresion;
 
 import java.awt.*;
 import java.awt.print.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -47,6 +48,25 @@ public class ImpresionTermica {
     this.contenidoFactura = this.contenidoFactura.replace("{{puntos}}", puntos);
     
   }
+  public ImpresionTermica(String tipo, ArrayList datos){
+      if (tipo.equals("pago empleado")) {
+          contenidoFactura=
+            "PAGO A EMPLEADO\n"+
+            "FECHA: {{date}}\n"+
+            "===================================\n"+
+            "PAGA: {{us}}\n"+
+            "EMPLEADO: {{ced}}-{{emp}}\n"+
+            "===================================\n"+
+            "monto: {{total}}\n"+
+            "\n \n";
+          this.contenidoFactura = this.contenidoFactura.replace("{{date}}", (String)datos.get(5));
+          this.contenidoFactura = this.contenidoFactura.replace("{{us}}", (String)datos.get(1));
+          this.contenidoFactura = this.contenidoFactura.replace("{{ced}}", (String)datos.get(2));
+          this.contenidoFactura = this.contenidoFactura.replace("{{emp}}", (String)datos.get(3));
+          this.contenidoFactura = this.contenidoFactura.replace("{{total}}", (String)datos.get(4));
+      }
+  }
+  
   public ImpresionTermica(){
       
   }
