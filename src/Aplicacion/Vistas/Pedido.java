@@ -99,10 +99,12 @@ public class Pedido extends View implements IView{
        db = new DataBase();
        //obteniendo el ultimo pedido que realizo el cliente con su rol de empresarial o comun
        if(comun.equals("1")){
-           ultimosPedidos = db.excecuteQuery("SELECT * FROM ((SELECT * FROM pedido WHERE(tipo = 'comun' AND id_cliente LIKE '"+telefono+"')) AS pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido)");
+           System.out.println("control");
+           ultimosPedidos = db.excecuteQuery("SELECT * FROM ((SELECT * FROM pedido WHERE(tipo = 'comun' AND id_cliente LIKE '"+telefono+"')) AS pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM ((SELECT * FROM pedido WHERE(tipo = 'comun' AND id_cliente LIKE '"+telefono+"'))AS pedidosportipo2))");
+       
        }
        else{
-           ultimosPedidos = db.excecuteQuery("SELECT * FROM ((SELECT * FROM pedido WHERE(tipo = 'empresarial' AND id_cliente LIKE '"+telefono+"')) AS pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM pedido)");
+           ultimosPedidos = db.excecuteQuery("SELECT * FROM ((SELECT * FROM pedido WHERE(tipo = 'empresarial' AND id_cliente LIKE '"+telefono+"')) AS pedidosportipo) WHERE fecha LIKE (SELECT MAX(fecha) FROM ((SELECT * FROM pedido WHERE(tipo = 'empresarial' AND id_cliente LIKE '"+telefono+"')) AS pedidosportipo2))");
        }
        
         //llenando pedido viejo en la interfaz grafica
