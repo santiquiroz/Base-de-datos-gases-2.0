@@ -592,7 +592,8 @@ public class InfoPedido extends View implements IView{
         db= new DataBase();
         
         String empleadonuevo = ((String)jComboBox2.getSelectedItem()).split("-")[1];
-        db.actualizar("UPDATE pedido SET direccion = '"+jTextField3.getText()+"', nota = '"+jTextArea1.getText()+"', id_empleado ='"+empleadonuevo+"' ,estado = '"+estado+"',bodega = '"+jComboBox3.getSelectedItem()+"' WHERE fecha = '"+ultimoFecha+"' AND numero = '"+ultimoNumero+"'");
+        System.out.println("UPDATE pedido SET direccion = '"+jTextField3.getText()+"', nota = '"+jTextArea1.getText()+"', id_empleado ='"+empleadonuevo+"' ,estado = '"+estado+"',bodega = '"+(String)jComboBox3.getSelectedItem()+"' WHERE fecha = '"+ultimoFecha+"' AND numero = '"+ultimoNumero+"'");
+        db.actualizar("UPDATE pedido SET direccion = '"+jTextField3.getText()+"', nota = '"+jTextArea1.getText()+"', id_empleado ='"+empleadonuevo+"' ,estado = '"+estado+"',bodega = '"+(String)jComboBox3.getSelectedItem()+"' WHERE fecha = '"+ultimoFecha+"' AND numero = '"+ultimoNumero+"'");
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

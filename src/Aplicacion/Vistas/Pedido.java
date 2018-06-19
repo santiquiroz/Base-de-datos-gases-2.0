@@ -232,6 +232,13 @@ public class Pedido extends View implements IView{
                 modeloCombo2.addElement(emp.get(1)+"-"+emp.get(0));
             }
         jComboBox2.setModel(modeloCombo2);
+        String ultimoNombreEmpleado="";
+        db = new DataBase();
+        db.excecuteQuery("SELECT nombre FROM empleado WHERE cedula LIKE '"+ultimoIdEmpleado+"'");
+        if (!db.isEmpty()) {
+            ultimoNombreEmpleado=db.getDato(0,0);
+        }
+        jComboBox2.setSelectedItem(ultimoNombreEmpleado+"-"+ultimoIdEmpleado);
         
         jTextField10.setText(telefono);
         
