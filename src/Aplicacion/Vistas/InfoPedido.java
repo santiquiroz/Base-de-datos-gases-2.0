@@ -630,8 +630,9 @@ public class InfoPedido extends View implements IView{
         int numprod = this.ultimoProductos.size();
         ManejoDeStrings ms = new ManejoDeStrings();
         for (int i = 0; i < numprod; i++) {
-            stringProductos=stringProductos+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(2),0,10))," ",11,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(3),0,7))," ",8,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(4),0,4))," ",5,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(5),0,10))," ",11,true)+"\n";
+            stringProductos=stringProductos+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(2),0,11))," ",11,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(3),0,8))," ",8,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(4),0,5))," ",5,true)+ms.rellenar((ms.recortar((String)((ArrayList)ultimoProductos.get(i)).get(5),0,10))," ",11,true)+"\n";
         }
+        System.out.println(stringProductos);
         String nombreMensajero=((((String)jComboBox2.getSelectedItem()).split("-")))[0];
         int numFacturas = Integer.parseInt((String)jComboBox4.getSelectedItem());
         for (int i = 0; i < numFacturas; i++) {

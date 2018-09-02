@@ -20,7 +20,7 @@ public class ManejoDeStrings {
                 texto=texto.substring(inicio,fin);
             }
             else{
-                texto=texto.substring(inicio,(texto.length()-1));
+                //texto=texto.substring(inicio,(texto.length()-1));
             }
         }
         
