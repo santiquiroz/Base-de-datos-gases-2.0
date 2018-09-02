@@ -1,0 +1,7 @@
+como respaldar todas las bases de datos:
+mysqldump -uroot -p --all-databases >c:/xampp/respaldo.sql
+c:/xampp/mysql/bin/mysqldump -uroot --all-databases -r C:/Users/santi/Documents/GitHub/Base-de-datos-gases-2.0/desnucar.sql
+como respaldar una sola base de datos:
+mysqldump -uroot -p gases2 >c:/xampp/respaldo.sql
+como restaurar
+mysql -uroot -p gases2 <c:/xampp/respaldo.sql

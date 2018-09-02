@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author santiago
+ * @author santiquiroz
  */
 public class ConvertidorAMatriz{
     ArrayList l;

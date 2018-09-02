@@ -9,27 +9,27 @@ puntos_descontados_por_obsequio VARCHAR(80)
 );
 
 CREATE TABLE usuario(
-nick VARCHAR(20) PRIMARY KEY,
-pasword VARCHAR(20) NOT NULL,
-nombre VARCHAR (20),
+nick VARCHAR(80) PRIMARY KEY,
+pasword VARCHAR(80) NOT NULL,
+nombre VARCHAR (80),
 administrador VARCHAR(1) NOT NULL,
 comun VARCHAR(1) NOT NULL
 );
 
 CREATE   TABLE empleado (
-cedula VARCHAR(20) PRIMARY KEY,
-nombre VARCHAR(20) NOT NULL,
-direccion VARCHAR(20) NOT NULL,
-telefono VARCHAR(20) NOT NULL,
+cedula VARCHAR(80) PRIMARY KEY,
+nombre VARCHAR(80) NOT NULL,
+direccion VARCHAR(80) NOT NULL,
+telefono VARCHAR(80) NOT NULL,
 activo VARCHAR (1) NOT NULL,
 inactivo VARCHAR (1) NOT NULL,
 despedido VARCHAR(1) NOT NULL
 );
 
 CREATE   TABLE pago (
-fechahora VARCHAR(20) PRIMARY KEY,
-id_usuario VARCHAR(20) REFERENCES USUARIO(nick) ON DELETE SET NULL,
-id_empleado VARCHAR(20) REFERENCES EMPLEADO(cedula) ON DELETE SET NULL,
+fechahora VARCHAR(80) PRIMARY KEY,
+id_usuario VARCHAR(80) REFERENCES USUARIO(nick) ON DELETE SET NULL,
+id_empleado VARCHAR(80) REFERENCES EMPLEADO(cedula) ON DELETE SET NULL,
 monto VARCHAR (80) NOT NULL
 );
 
@@ -38,97 +38,97 @@ nombre VARCHAR(80) PRIMARY KEY
 );
 
 CREATE TABLE cliente (
-telefono VARCHAR(20) PRIMARY KEY,
-nombre VARCHAR(20),
-fecha_registro VARCHAR(20) NOT NULL,
-puntos VARCHAR(20) NOT NULL,
+telefono VARCHAR(80) PRIMARY KEY,
+nombre VARCHAR(80),
+fecha_registro VARCHAR(80) NOT NULL,
+puntos VARCHAR(80) NOT NULL,
 empresarial VARCHAR(1) NOT NULL,
-comun Varchar(19) NOT NULL,
+comun Varchar(1) NOT NULL,
 id_municipio VARCHAR(80) REFERENCES municipio(nombre) ON DELETE SET NULL 
 );
 
 CREATE   TABLE productoe (
-codigo VARCHAR(20),
-nombre VARCHAR (20),
-peso VARCHAR(20) NOT NULL,
-tipo VARCHAR(20) NOT NULL,
-id_cliente VARCHAR(20)REFERENCES CLIENTE(telefono),
+codigo VARCHAR(80),
+nombre VARCHAR (80),
+peso VARCHAR(80) NOT NULL,
+tipo VARCHAR(80) NOT NULL,
+id_cliente VARCHAR(80)REFERENCES CLIENTE(telefono),
 PRIMARY KEY (codigo,id_cliente)
 );
 
 CREATE   TABLE colore(
-color VARCHAR(20),
-precio VARCHAR(20) NOT NULL,
+color VARCHAR(80),
+precio VARCHAR(80) NOT NULL,
 disponible VARCHAR (1),
-id_productoe_codigo VARCHAR(20) REFERENCES productoe(codigo),
-id_productoe_id_cliente VARCHAR(20) REFERENCES productoe(id_cliente),
+id_productoe_codigo VARCHAR(80) REFERENCES productoe(codigo),
+id_productoe_id_cliente VARCHAR(80) REFERENCES productoe(id_cliente),
 PRIMARY KEY(color,id_productoe_codigo,id_productoe_id_cliente) 
 );
 
 CREATE   TABLE pedido (
-fecha VARCHAR(20) NOT NULL,
-numero VARCHAR(20) NOT NULL,
+fecha VARCHAR(80) NOT NULL,
+numero VARCHAR(80) NOT NULL,
 PRIMARY KEY(fecha,numero),
 direccion VARCHAR(20) NOT NULL,
-nota VARCHAR(100),
-precio_total VARCHAR(20) NOT NULL,
-estado VARCHAR(20) NOT NULL,
-id_usuario VARCHAR(20) REFERENCES USUARIO(nick) ON DELETE SET NULL,
-id_empleado VARCHAR(20) REFERENCES EMPLEADO(cedula) ON DELETE SET NULL,
-id_cliente VARCHAR(20) REFERENCES CLIENTE(telefono) ON DELETE SET NULL,
-tipo VARCHAR(20),
+nota VARCHAR(130),
+precio_total VARCHAR(80) NOT NULL,
+estado VARCHAR(80) NOT NULL,
+id_usuario VARCHAR(80) REFERENCES USUARIO(nick) ON DELETE SET NULL,
+id_empleado VARCHAR(80) REFERENCES EMPLEADO(cedula) ON DELETE SET NULL,
+id_cliente VARCHAR(80) REFERENCES CLIENTE(telefono) ON DELETE SET NULL,
+tipo VARCHAR(80),
 id_municipio VARCHAR(80),
 condonado VARCHAR(80),
 puntos VARCHAR (80),
 obsequio VARCHAR (80),
 puntos_descontados_por_obsequio	VARCHAR(80),
-bodega VARCHAR(10),
-horaRegistro VARCHAR(20)
+bodega VARCHAR(80),
+horaRegistro VARCHAR(80)
 );
 
 CREATE   TABLE productoexpedido(
-consecutivo VARCHAR(20),
-nombre VARCHAR (20),
-color VARCHAR(20) NOT NULL,
-peso VARCHAR (20) NOT NULL,
-precio VARCHAR(20) NOT NULL,
-puntos VARCHAR (20) NOT NULL,
-id_productoe_codigo VARCHAR(20) REFERENCES productoe(codigo),
-id_productoe_id_cliente VARCHAR(20) REFERENCES productoe(id_cliente),
-id_pedido_fecha VARCHAR(20)REFERENCES pedido(fecha) ON DELETE CASCADE,
-id_pedido_numero VARCHAR(20)REFERENCES pedido(numero) ON DELETE CASCADE,
+consecutivo VARCHAR(80),
+nombre VARCHAR (80),
+color VARCHAR(80) NOT NULL,
+peso VARCHAR (80) NOT NULL,
+precio VARCHAR(80) NOT NULL,
+puntos VARCHAR (80) NOT NULL,
+id_productoe_codigo VARCHAR(80) REFERENCES productoe(codigo),
+id_productoe_id_cliente VARCHAR(80) REFERENCES productoe(id_cliente),
+id_pedido_fecha VARCHAR(80)REFERENCES pedido(fecha) ON DELETE CASCADE,
+id_pedido_numero VARCHAR(80)REFERENCES pedido(numero) ON DELETE CASCADE,
 PRIMARY KEY (consecutivo,id_pedido_fecha,id_pedido_numero)
 );
 
 CREATE   TABLE productom(
-codigo VARCHAR(20),
-nombre varchar(20),
-peso VARCHAR(20) NOT NULL,
-tipo VARCHAR(20) NOT NULL,
+codigo VARCHAR(80),
+nombre varchar(80),
+peso VARCHAR(80) NOT NULL,
+tipo VARCHAR(80) NOT NULL,
 id_municipio VARCHAR(80) REFERENCES municipio(nombre),
 PRIMARY KEY (id_municipio,codigo)
 );
 
 CREATE   TABLE colorm(
-color VARCHAR(20),
-precio VARCHAR(20) NOT NULL,
+color VARCHAR(80),
+precio VARCHAR(80) NOT NULL,
 disponible VARCHAR (1),
-id_productom_codigo VARCHAR(20) REFERENCES productom(codigo),
-id_productom_id_municipio VARCHAR(20) REFERENCES productom(id_municipio),
+id_productom_codigo VARCHAR(80) REFERENCES productom(codigo),
+id_productom_id_municipio VARCHAR(80) REFERENCES productom(id_municipio),
 PRIMARY KEY (id_productom_id_municipio,id_productom_codigo,color)
 );
 
 CREATE   TABLE productomxpedido (
-consecutivo VARCHAR(20),
-nombre VARCHAR (20),
-color VARCHAR(20) NOT NULL,
-peso VARCHAR (20) NOT NULL,
-precio VARCHAR(20) NOT NULL,
-puntos VARCHAR (20) NOT NULL,
-id_productom_codigo VARCHAR(20) REFERENCES productom(codigo),
-id_productom_id_municipio VARCHAR(20) REFERENCES productom(id_municipio),
-id_pedido_fecha VARCHAR(20) REFERENCES pedido(fecha) ON DELETE CASCADE,
-id_pedido_numero VARCHAR(20) REFERENCES pedido(numero) ON DELETE CASCADE,
+consecutivo VARCHAR(80),
+nombre VARCHAR (80),
+color VARCHAR(80) NOT NULL,
+peso VARCHAR (80) NOT NULL,
+precio VARCHAR(80) NOT NULL,
+puntos VARCHAR (80) NOT NULL,
+id_productom_codigo VARCHAR(80) REFERENCES productom(codigo),
+id_productom_id_municipio VARCHAR(80) REFERENCES productom(id_municipio),
+id_pedido_fecha VARCHAR(80) REFERENCES pedido(fecha) ON DELETE CASCADE,
+id_pedido_numero VARCHAR(80) REFERENCES pedido(numero) ON DELETE CASCADE,
 PRIMARY KEY ( consecutivo,id_pedido_fecha,id_pedido_numero)
 );
 

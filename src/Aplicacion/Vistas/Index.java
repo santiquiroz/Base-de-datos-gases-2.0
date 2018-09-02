@@ -2,7 +2,9 @@
 package Aplicacion.Vistas;
 
 import Aplicacion.Controller.IndexController;
+import System.DataBase.Core.Backup;
 import System.DataBase.Core.DataBase;
+import System.DataBase.Core.HiloLector;
 import System.Helper.IO;
 import System.MVC.Core.IView;
 import System.MVC.Core.View;
@@ -22,6 +24,8 @@ import javax.swing.JOptionPane;
 public class Index extends View implements IView{
     DataBase db = new DataBase();
     public Index() {
+        //new HiloLector(p.getErrorStream()).start();
+        //new Backup().backup();
         initComponents();
         setVisible(true);
         setTitle("Ventana principal del sistema");
