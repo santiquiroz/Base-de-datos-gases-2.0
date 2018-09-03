@@ -36,6 +36,7 @@ public class RestaurarBD extends javax.swing.JDialog {
         p = parent;
         initComponents();
         this.setLocationRelativeTo(p);
+        this.setVisible(true);
     }
 
     /**

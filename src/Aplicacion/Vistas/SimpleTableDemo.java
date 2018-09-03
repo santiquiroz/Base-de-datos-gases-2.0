@@ -139,6 +139,9 @@ public SimpleTableDemo(String [] cabecera, Object[] [] datos, String titulo, Str
                     if(ventanaObjetivo.equals("Carrito")){
                         new carrito(datos,(Pedido) ventanaPadre,"busqueda");
                     }
+                    else if (ventanaObjetivo.equals("ActualizarProductoEnPedido")) {
+                        new ActualizarProductoEnPedido(datos,(Pedido) ventanaPadre);
+                    }
                     else if(ventanaObjetivo.equals("InfoColor")){
                         new InfoColor(datos,((InfoProducto)ventanaPadre).tipoproducto);
                     }

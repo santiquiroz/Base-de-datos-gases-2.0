@@ -84,8 +84,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbackupActionPerformed
 
     private void btnrestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrestaurarActionPerformed
-        /*RestaurarBD restore=new RestaurarBD(this, true);
-        restore.setVisible(true);*/
+        RestaurarBD restore=new RestaurarBD(this, true);
     }//GEN-LAST:event_btnrestaurarActionPerformed
 
     /**
