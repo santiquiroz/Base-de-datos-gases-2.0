@@ -2982,6 +2982,11 @@ public class Administrador extends View implements IView{
         jButton20.setFocusable(false);
         jButton20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton20.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -4565,6 +4570,15 @@ public class Administrador extends View implements IView{
         db.excecuteQuery("SELECT CURDATE()");
         jTextField78.setText(db.getDato(0,0));
     }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        new EditarRestricciones();
+
+//boolean b1 = IO.textfield_requerido(jTextField2, jTextField3);
+        
+        
+            
+    }//GEN-LAST:event_jButton20ActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
