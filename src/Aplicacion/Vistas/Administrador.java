@@ -35,7 +35,7 @@ import javax.swing.JInternalFrame;
  */
 public class Administrador extends View implements IView{
     DataBase db = new DataBase();
-    String nickUsuario,nickUsuario2,nombreUsuario;
+    String nickUsuario,nickUsuario2,nombreUsuario, regex;
     
     //Estas dos variables son para el timer que refresca los productos del dia
     Timer myTimer = new Timer();
@@ -3147,6 +3147,7 @@ public class Administrador extends View implements IView{
         
         if (b1){
             String telefono= jTextField4.getText();
+            regex = "^([\\d]{10}|[\\d]{7})$";
             ArrayList datoscliente;
             boolean encontrado = false;
             //buscando si es un cliente comun
@@ -3159,7 +3160,14 @@ public class Administrador extends View implements IView{
                encontrado = false;
             }
             if(encontrado == false){
-                new ClienteNuevo(telefono,this.nombreUsuario);
+                
+                if (telefono.matches(regex)){
+                    new ClienteNuevo(telefono,this.nombreUsuario);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Ingrese el telefono con un formato valido");
+                }
+                
             }
             else{
                 new InfoCliente(datoscliente,this.nombreUsuario);
@@ -3865,26 +3873,34 @@ public class Administrador extends View implements IView{
     public void registrarCliente(){
         boolean b1 = IO.textfield_requerido(jTextField50);
         if(b1){
-            String telefonoInsercionCliente = jTextField50.getText(), 
+            regex = "^([\\d]{10}|[\\d]{7})$";
+            
+            if (jTextField50.getText().matches(regex)){
+                String telefonoInsercionCliente = jTextField50.getText(), 
                     nombreInsercionCliente = jTextField51.getText(),
                     tipoInsercionCliente = (String)jComboBox10.getSelectedItem(),
                     municipioInsercionCliente = "",
                     empresarialInsercionCliente = "1",
                     comunInsercionCliente = "0";
-            db =new DataBase();
-            db.excecuteQuery("SELECT * FROM cliente WHERE telefono='"+telefonoInsercionCliente+"'");
-            if(db.isEmpty()){
-                if(tipoInsercionCliente.equals("Comun")){
-                    municipioInsercionCliente = (String)jComboBox11.getSelectedItem();
-                    empresarialInsercionCliente = "0";
-                    comunInsercionCliente = "1";
+                db =new DataBase();
+                db.excecuteQuery("SELECT * FROM cliente WHERE telefono='"+telefonoInsercionCliente+"'");
+                if(db.isEmpty()){
+                    if(tipoInsercionCliente.equals("Comun")){
+                        municipioInsercionCliente = (String)jComboBox11.getSelectedItem();
+                        empresarialInsercionCliente = "0";
+                        comunInsercionCliente = "1";
+                    }
+                    db = new DataBase();
+                    db.insertar3("INSERT INTO cliente(telefono,nombre,fecha_registro,puntos,empresarial,comun,id_municipio) VALUES ('"+telefonoInsercionCliente+"','"+nombreInsercionCliente+"',"+"(SELECT CURDATE()),"+"'0','"+empresarialInsercionCliente+"','"+comunInsercionCliente+"','"+municipioInsercionCliente+"')");
                 }
-                db = new DataBase();
-                db.insertar3("INSERT INTO cliente(telefono,nombre,fecha_registro,puntos,empresarial,comun,id_municipio) VALUES ('"+telefonoInsercionCliente+"','"+nombreInsercionCliente+"',"+"(SELECT CURDATE()),"+"'0','"+empresarialInsercionCliente+"','"+comunInsercionCliente+"','"+municipioInsercionCliente+"')");
+                else{
+                    JOptionPane.showMessageDialog(null, "El cliente ya estaba registrado");
+                }
             }
             else{
-                JOptionPane.showMessageDialog(null, "El cliente ya estaba registrado");
-            }
+                    JOptionPane.showMessageDialog(null, "Ingrese el telefono con un formato valido");
+                }
+            
         }
         else{
             JOptionPane.showMessageDialog(null, "Llene todos los campos requeridos:(telefono)");
