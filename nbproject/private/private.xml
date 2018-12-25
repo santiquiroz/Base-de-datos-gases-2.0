@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/santiago/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/carrito.java</file>
-            <file>file:/C:/Users/santiago/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/Administrador.java</file>
-            <file>file:/C:/Users/santiago/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/Pedido.java</file>
-            <file>file:/C:/Users/santiago/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/BusquedaAvanzadaPedido.java</file>
-            <file>file:/C:/Users/santiago/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/Comun.java</file>
-            <file>file:/C:/Users/santiago/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/EditarEmpleado.java</file>
-            <file>file:/C:/Users/santiago/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/ClienteNuevo.java</file>
-            <file>file:/C:/Users/santiago/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/EditarRestricciones.java</file>
+            <file>file:/C:/Users/ismaelo/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/InfoPedido.java</file>
+            <file>file:/C:/Users/ismaelo/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/Vip.java</file>
+            <file>file:/C:/Users/ismaelo/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/PruebaTemporal.java</file>
+            <file>file:/C:/Users/ismaelo/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/EditarRestricciones.java</file>
+            <file>file:/C:/Users/ismaelo/Documents/GitHub/Base-de-datos-gases-2.0/src/Aplicacion/Vistas/Administrador.java</file>
         </group>
     </open-files>
 </project-private>

@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Frame de creacion cliente nuevo
- * @author santiquiroz e isamelTheMemeMaster
+ * @author santiquiroz e IsmaelTheMemeMaster
  * @version 0.8.1
  * @since JConexionDB 1.0
  */
@@ -221,8 +221,8 @@ public class EditarRestricciones extends View implements IView{
                 
                 db=new DataBase();
                 db.actualizar("UPDATE static SET limPuntos = '"+limPuntos+"' , limPuntosAcomulables = '"+limPuntosAcomulables+"' , puntosxkilo = '"+puntosxkilo+"' , obsequio = '"+obsequio+"' , puntos_descontados_por_obsequio = '"+puntos_descontados_por_obsequio+"', tiempo_de_gracia = '"+tiempo_de_gracia+"' WHERE codigo = '"+1+"'");
-                
-                
+                JOptionPane.showMessageDialog(null, "Modificacion realizada con exito");
+                this.dispose();
             } catch(NumberFormatException e) { 
                  JOptionPane.showMessageDialog(null, "Todos los campos requeridos deben contener numeros enteros");
             } 

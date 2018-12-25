@@ -29,7 +29,7 @@ import javax.swing.JInternalFrame;
 
 /**
  * Frame del administrador
- * @author santiquiroz e isamelTheMemeMaster
+ * @author santiquiroz e IsmaelTheMemeMaster
  * @version 0.8.1
  * @since JConexionDB 1.0
  */
@@ -41,7 +41,9 @@ public class Administrador extends View implements IView{
     Timer myTimer = new Timer();
     TimerTask task = new TimerTask(){
         public void run(){
+            //AbrirVentanaNuevaConListaDeLosQueSePasaron()
             if (jCheckBox1.isSelected()) {
+                
                BuscarPedidosDelDia();
             }
              
@@ -90,7 +92,6 @@ public class Administrador extends View implements IView{
         });
         pedidosHoy = new ArrayList();   //Pare guardarlos antes de ponerlos en el jpanel
         myTimer.scheduleAtFixedRate(task,1000,8000);
-        
         
     }
     
@@ -1830,7 +1831,7 @@ public class Administrador extends View implements IView{
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Empleados", jPanel2);
@@ -2570,7 +2571,7 @@ public class Administrador extends View implements IView{
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Municipios", jPanel18);
@@ -2663,7 +2664,7 @@ public class Administrador extends View implements IView{
                         .addComponent(jLabel3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(509, Short.MAX_VALUE))
+                .addContainerGap(521, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Mi cuenta", jPanel4);
@@ -2945,7 +2946,7 @@ public class Administrador extends View implements IView{
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 247, Short.MAX_VALUE))
+                .addGap(0, 262, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Usuarios", jPanel5);
@@ -3001,14 +3002,14 @@ public class Administrador extends View implements IView{
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
+                        .addGap(79, 79, 79)
                         .addComponent(jToggleButton6))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(32, 32, 32)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 943, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -3023,9 +3024,9 @@ public class Administrador extends View implements IView{
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(132, 132, 132)
+                .addGap(149, 149, 149)
                 .addComponent(jToggleButton6)
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addContainerGap(298, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -3165,7 +3166,7 @@ public class Administrador extends View implements IView{
                     new ClienteNuevo(telefono,this.nombreUsuario);
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Ingrese el telefono con un formato valido");
+                    JOptionPane.showMessageDialog(null, "Ingrese el telefono con un formato valido. \n  El formato valido es de 7 o 10 digitos, \n     sin espacios, letras ni simbolos. \n       Ej: 4619217 o 3046709446 ");
                 }
                 
             }
