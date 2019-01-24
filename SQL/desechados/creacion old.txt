@@ -5,10 +5,7 @@ limPuntos VARCHAR(20),
 limPuntosAcomulables VARCHAR(20),
 puntosxkilo VARCHAR(20),
 obsequio VARCHAR (80),
-puntos_descontados_por_obsequio VARCHAR(80),
-alerta_retencion VARCHAR(1),
-tiempo_de_gracia VARCHAR(20),
-tiempo_de_redencion VARCHAR(20)
+puntos_descontados_por_obsequio VARCHAR(80)
 );
 
 CREATE TABLE usuario(
@@ -47,12 +44,7 @@ fecha_registro VARCHAR(80) NOT NULL,
 puntos VARCHAR(80) NOT NULL,
 empresarial VARCHAR(1) NOT NULL,
 comun Varchar(1) NOT NULL,
-id_municipio VARCHAR(80) REFERENCES municipio(nombre) ON DELETE SET NULL, 
-promedio_dias_pedido VARCHAR(20),
-fecha_ultimo_pedido VARCHAR(20),
-no_molestar VARCHAR(1),
-numero_dias_pedido VARCHAR(80),
-numero_pedidos VARCHAR(80)
+id_municipio VARCHAR(80) REFERENCES municipio(nombre) ON DELETE SET NULL 
 );
 
 CREATE   TABLE productoe (
@@ -141,63 +133,5 @@ PRIMARY KEY ( consecutivo,id_pedido_fecha,id_pedido_numero)
 );
 
 
-------------------------------------------------------triggers--------------------------------------------------------------
-
-
-DELIMITER $$
-CREATE OR REPLACE TRIGGER actualizar_fechas_cliente AFTER INSERT ON
-    pedido FOR EACH ROW
-BEGIN
-    DECLARE
-        DIAS_QUE_SE_DEMORO INT ; DECLARE PROMEDIO_VIEJO INT ; DECLARE NUMERO_DIAS_PEDIDO_VARIABLE INT ; DECLARE NUMERO_PEDIDOS_VARIABLE INT ; DECLARE TELEFONO_CLIENTE VARCHAR (20) ;             DECLARE PROMEDIO_NUEVO INT ; DECLARE HOY DATE ; DECLARE FECHA_ULTIMO_PEDIDO_VARIABLE  DATE;
-    
-    SET HOY := NEW.fecha;
-    SET TELEFONO_CLIENTE := NEW.id_cliente;
-SET PROMEDIO_VIEJO := (SELECT promedio_dias_pedido FROM cliente WHERE telefono = TELEFONO_CLIENTE);
-SET FECHA_ULTIMO_PEDIDO_VARIABLE := (SELECT fecha_ultimo_pedido FROM cliente WHERE telefono = TELEFONO_CLIENTE);
-    SET NUMERO_DIAS_PEDIDO_VARIABLE :=(SELECT numero_dias_pedido FROM cliente WHERE telefono = TELEFONO_CLIENTE);
-    SET NUMERO_PEDIDOS_VARIABLE := (SELECT numero_pedidos FROM cliente WHERE telefono = TELEFONO_CLIENTE);
-    SET DIAS_QUE_SE_DEMORO := (SELECT DATEDIFF(HOY, FECHA_ULTIMO_PEDIDO_VARIABLE ));
-    
-    UPDATE cliente SET promedio_dias_pedido =(NUMERO_DIAS_PEDIDO_VARIABLE / NUMERO_PEDIDOS_VARIABLE),fecha_ultimo_pedido = HOY,numero_dias_pedido =(NUMERO_DIAS_PEDIDO_VARIABLE + DIAS_QUE_SE_DEMORO),numero_pedidos =(NUMERO_PEDIDOS_VARIABLE + 1)   WHERE telefono = TELEFONO_CLIENTE ;
-END $$
-DELIMITER ;;
-
-
-------------------------------------------------------procedimiento----------------------------------------------------------
-
-
-DELIMITER $$
-
-BEGIN
-DECLARE aux INT;
-CREATE OR REPLACE TABLE te_pasaste AS SELECT * FROM cliente WHERE ((fecha_ultimo_pedido IS NOT NULL)AND(SELECT DATEDIFF((SELECT CURDATE()),cliente.fecha_ultimo_pedido ))>(promedio_dias_pedido+(SELECT tiempo_de_gracia FROM static))AND(no_molestar = 0));
-
-SELECT COUNT(*) INTO aux FROM te_pasaste;
-
-IF aux = 0 THEN
-    UPDATE STATIC SET alerta_retencion = 0 WHERE 1;
-ELSE
-    UPDATE STATIC SET alerta_retencion = 1 WHERE 1;
-END IF;
-END
-
-$$
-
-
---------------------------------------------------------evento-----------------------------------------------------------------
-
-
-SET GLOBAL event_scheduler := ON;
-
-
-
-
-CREATE OR REPLACE EVENT actualizar_te_pasast
-ON SCHEDULE EVERY 60 MINUTE STARTS NOW()ON COMPLETION PRESERVE
-DO
-CALL procedimiento_actualizar_te_pasaste();
-
-
 ------------------------------------------------------insercion-------------------------------------------------------------
-INSERT INTO static(codigo, limPuntos,limPuntosAcomulables,puntosxkilo,obsequio,puntos_descontados_por_obsequio,tiempo_de_gracia,tiempo_de_redencion ) VALUES( '1','4320','4320','80','','4320','5','100');
+INSERT INTO static(codigo, limPuntos,limPuntosAcomulables,puntosxkilo,obsequio,puntos_descontados_por_obsequio) VALUES( '1','4320','4320','80','','4320');
