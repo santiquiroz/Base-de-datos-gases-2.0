@@ -9,7 +9,6 @@ import System.Impresion.ImpresionTermica;
 import System.MVC.Core.IView;
 import System.MVC.Core.View;
 import backup.Vista.Principal;
-import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -17,13 +16,11 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 
@@ -37,7 +34,8 @@ public class Administrador extends View implements IView{
     DataBase db = new DataBase();
     String nickUsuario,nickUsuario2,nombreUsuario, regex;
     
-    //Estas dos variables son para el timer que refresca los productos del dia
+    
+     //Estas dos variables son para el timer que refresca los productos del dia
     Timer myTimer = new Timer();
     TimerTask task = new TimerTask(){
         public void run(){
@@ -48,6 +46,21 @@ public class Administrador extends View implements IView{
             }
              
         }
+    };
+    
+    //Estas dos variables son para el timer que refresca los clientes que se pasaron
+    Timer NotificationTimer= new Timer();
+    TimerTask notificationTask = new TimerTask(){
+        public void run(){
+            //AbrirVentanaNuevaConListaDeLosQueSePasaron()
+            if (jCheckBox1.isSelected()) {
+                
+               MostrarNotificaciones();
+            }
+             
+        }
+
+        
     };
     
     public ArrayList pedidosHoy;
@@ -71,6 +84,7 @@ public class Administrador extends View implements IView{
         db.excecuteQuery("SELECT nombre,pasword FROM usuario WHERE nick = '"+nick+"'");
         nombreUsuario=db.getDato(0,0);
         
+        
         jTextField1.setText(nombreUsuario);
         nickUsuario= nick;
         jTextField2.setText(nick);
@@ -92,7 +106,7 @@ public class Administrador extends View implements IView{
         });
         pedidosHoy = new ArrayList();   //Pare guardarlos antes de ponerlos en el jpanel
         myTimer.scheduleAtFixedRate(task,1000,8000);
-        
+        NotificationTimer.scheduleAtFixedRate(notificationTask,1000,8000);
     }
     
     @SuppressWarnings("unchecked")
@@ -393,6 +407,9 @@ public class Administrador extends View implements IView{
         jToolBar1 = new javax.swing.JToolBar();
         jButton6 = new javax.swing.JButton();
         jButton20 = new javax.swing.JButton();
+        jTabbedPane7 = new javax.swing.JTabbedPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -2990,6 +3007,15 @@ public class Administrador extends View implements IView{
         });
         jToolBar1.add(jButton20);
 
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jTabbedPane7.addTab("Notificaciones", jScrollPane2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -2997,19 +3023,21 @@ public class Administrador extends View implements IView{
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jTabbedPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(jToggleButton6))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jToggleButton6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 943, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -3024,9 +3052,11 @@ public class Administrador extends View implements IView{
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(149, 149, 149)
+                .addGap(97, 97, 97)
+                .addComponent(jTabbedPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jToggleButton6)
-                .addContainerGap(298, Short.MAX_VALUE))
+                .addGap(64, 64, 64))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -3141,7 +3171,18 @@ public class Administrador extends View implements IView{
             frame.setVisible(true);
             this.panelPedidosHoy.repaint();
     }
-    
+    private void MostrarNotificaciones(){
+        
+        DataBase dbNotificacion =new DataBase();
+        ArrayList datos;
+        datos = dbNotificacion.excecuteQuery("SELECT * FROM static");
+        
+        if ((((ArrayList)datos.get(0)).get(6)).equals("1")) {
+            String[] notificaciones = {"putisimo","el","que","lo","lea"};          
+            this.jList1.setListData( notificaciones );
+            this.jList1.repaint();
+        }
+    } 
     private void BuscarCliente(){
         
         boolean b1 = IO.textfield_requerido(jTextField4);
@@ -3178,7 +3219,7 @@ public class Administrador extends View implements IView{
             JOptionPane.showMessageDialog(null, "Ingrese el telefono del cliente");
         }
     }
-    
+
     private void jToggleButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton6ActionPerformed
         new Index();
         this.dispose();
@@ -4741,6 +4782,7 @@ public class Administrador extends View implements IView{
     private javax.swing.JLabel jLabel96;
     private javax.swing.JLabel jLabel97;
     private javax.swing.JLabel jLabel98;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -4801,6 +4843,7 @@ public class Administrador extends View implements IView{
     private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JRadioButton jRadioButton8;
     private javax.swing.JRadioButton jRadioButton9;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -4811,6 +4854,7 @@ public class Administrador extends View implements IView{
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane6;
+    private javax.swing.JTabbedPane jTabbedPane7;
     private javax.swing.JTabbedPane jTabbedPane8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;

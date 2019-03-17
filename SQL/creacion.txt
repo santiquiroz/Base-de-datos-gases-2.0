@@ -140,6 +140,15 @@ id_pedido_numero VARCHAR(80) REFERENCES pedido(numero) ON DELETE CASCADE,
 PRIMARY KEY ( consecutivo,id_pedido_fecha,id_pedido_numero)
 );
 
+CREATE TABLE notificacion (
+consecutivo VARCHAR(80) NOT NULL,
+fechahora VARCHAR(80) NOT NULL,
+tipo VARCHAR(80) NOT NULL,
+visto VARCHAR(1) NOT NULL,
+mensaje VARCHAR(80) NOT NULL,
+nick VARCHAR(80) REFERENCES usuario(nick),
+PRIMARY KEY (consecutivo , nick)
+);
 
 ------------------------------------------------------triggers--------------------------------------------------------------
 
