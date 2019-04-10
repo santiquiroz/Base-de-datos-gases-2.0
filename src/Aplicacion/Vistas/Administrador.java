@@ -41,7 +41,8 @@ public class Administrador extends View implements IView{
         public void run(){
             //AbrirVentanaNuevaConListaDeLosQueSePasaron()
             if (jCheckBox1.isSelected()) {
-                
+                db = new DataBase();
+                db.excecuteQuery("SET GLOBAL event_scheduler := ON");
                BuscarPedidosDelDia();
             }
              
@@ -1890,8 +1891,7 @@ public class Administrador extends View implements IView{
 
         jLabel42.setText("Tipo");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquido", "Envase", "Otro", "Desconocido" }));
-        jComboBox5.setSelectedIndex(3);
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquido", "Envase", "Extintor", "Soldadura", "Gas industrial", "Otro", "Desconocido" }));
         jComboBox5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox5ActionPerformed(evt);
@@ -2039,7 +2039,7 @@ public class Administrador extends View implements IView{
 
         jLabel40.setText("Tipo");
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquido", "Envase", "Otro" }));
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquido", "Envase", "Extintor", "Soldadura", "Gas industrial", "Otro" }));
         jComboBox6.setToolTipText("");
 
         jLabel45.setText("Clientela");
@@ -3178,9 +3178,9 @@ public class Administrador extends View implements IView{
         datos = dbNotificacion.excecuteQuery("SELECT * FROM static");
         
         if ((((ArrayList)datos.get(0)).get(6)).equals("1")) {
-            String[] notificaciones = {"putisimo","el","que","lo","lea"};          
+            /*String[] notificaciones = {"putisimo","el","que","lo","lea"};          
             this.jList1.setListData( notificaciones );
-            this.jList1.repaint();
+            this.jList1.repaint();*/
         }
     } 
     private void BuscarCliente(){

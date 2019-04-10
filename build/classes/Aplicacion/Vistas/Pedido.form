@@ -197,7 +197,7 @@
                                       <Component id="jButton1" alignment="0" min="-2" pref="194" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="jPanel16" pref="0" max="32767" attributes="0"/>
+                              <Component id="jPanel16" pref="343" max="32767" attributes="0"/>
                           </Group>
                           <Component id="productoslayout" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -1072,14 +1072,16 @@
         <Component class="javax.swing.JComboBox" name="jComboBox5">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
+              <StringArray count="7">
                 <StringItem index="0" value="Liquido"/>
                 <StringItem index="1" value="Envase"/>
-                <StringItem index="2" value="Otro"/>
-                <StringItem index="3" value="Desconocido"/>
+                <StringItem index="2" value="Extintor"/>
+                <StringItem index="3" value="Soldadura"/>
+                <StringItem index="4" value="Gas industrial"/>
+                <StringItem index="5" value="Otro"/>
+                <StringItem index="6" value="Desconocido"/>
               </StringArray>
             </Property>
-            <Property name="selectedIndex" type="int" value="3"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox5ActionPerformed"/>
