@@ -12,7 +12,6 @@ Como configurar el servidor:
 
 		use mysql;
 		update user set plugin='' where User='root';
-		flush privileges;
 		exit
 
 		sudo /etc/init.d/mysql restart
@@ -28,9 +27,16 @@ Como configurar el servidor:
 	sudo phpenmod mbstring
 	sudo systemctl restart apache2
 -configurando phpmyadmin
-	sudo vi /etc/httpd/conf.d/phpMyAdmin.conf
 	https://www.digitalocean.com/community/tutorials/como-instalar-en-ubuntu-18-04-la-pila-lamp-linux-apache-mysql-y-php-es
+	sudo ufw app list
+	sudo ufw app info "Apache Full"
+	sudo ufw allow in "Apache Full"
 	https://askubuntu.com/questions/387062/how-to-solve-the-phpmyadmin-not-found-issue-after-upgrading-php-and-apache
+	sudo ln -s /usr/share/phpmyadmin /var/www/
+	sudo nano /etc/apache2/apache2.conf
+	
+	añadir:Include /etc/phpmyadmin/apache.conf
+	
 -configurando usuarios
 	CREATE USER 'phpmyadminuser' IDENTIFIED BY 'password';
 	GRANT ALL PRIVILEGES ON *.* TO 'phpmyadminuser' WITH GRANT OPTION;
