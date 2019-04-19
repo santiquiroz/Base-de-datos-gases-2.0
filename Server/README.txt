@@ -38,6 +38,14 @@ Como configurar el servidor:
 
 -acceso remoto
 	https://www.ochobitshacenunbyte.com/2018/03/14/configurar-mariadb-y-mysql-para-acceso-remoto/
+	
+	sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+	
+	comentar linea del 127.0.1.1
+	
+	sudo service mysql restart
+	sudo service mariadb restart
+	
 
 -subiendo respaldo 
 	mysql -u root -pPassword123 wp_users < wp_users.sql	
