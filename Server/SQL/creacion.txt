@@ -73,6 +73,22 @@ id_productoe_id_cliente VARCHAR(80) REFERENCES productoe(id_cliente),
 PRIMARY KEY(color,id_productoe_codigo,id_productoe_id_cliente) 
 );
 
+CREATE OR REPLACE TABLE productoepredeterminado(
+codigo VARCHAR(80),
+nombre VARCHAR (80),
+peso VARCHAR(80) NOT NULL,
+tipo VARCHAR(80) NOT NULL,
+PRIMARY KEY (codigo)
+);
+
+CREATE OR REPLACE  TABLE colorepredeterminado(
+color VARCHAR(80),
+precio VARCHAR(80) NOT NULL,
+disponible VARCHAR (1),
+id_productoe_codigo VARCHAR(80) REFERENCES productoe(codigo),
+PRIMARY KEY(color,id_productoe_codigo) 
+);
+
 CREATE   TABLE pedido (
 fecha VARCHAR(80) NOT NULL,
 numero VARCHAR(80) NOT NULL,
@@ -173,6 +189,41 @@ END $$
 DELIMITER ;;
 
 
+
+DELIMITER $$
+CREATE OR REPLACE TRIGGER crear_productos_de_cliente_empresarial_por_defecto AFTER INSERT ON
+    pedido FOR EACH ROW
+BEGIN
+    DECLARE cursor_productose_defecto CURSOR FOR
+    SELECT * FROM productoepredeterminado;
+    DECLARE cursor_colore_defecto CURSOR FOR
+    SELECT * FROM productoepredeterminado;
+    SET TELEFONO_CLIENTE := NEW.id_cliente
+    OPEN cursor_productose_defecto;
+        get_cursor_productose_defecto: LOOP
+            FETCH get_cursor_productose_defecto INTO codigop, nombrep, pesop, liquidop;
+            IF not_found = 1 THEN
+                LEAVE get_cursor_productose_defecto;
+            END IF;
+            INSERT INTO productoe (codigo, nombre, peso, tipo, id_cliente)
+            VALUES (codigop, nombrep, pesop, liquidop, TELEFONO_CLIENTE); 
+        END LOOP;
+    CLOSE cursor_productose_defecto;
+
+    OPEN cursor_colore_defecto;
+        get_cursor_colorse_defecto: LOOP
+            FETCH get_cursor_colorse_defecto INTO colorp, preciop, disponiblep, id_productoe_codigop;
+            IF not_found = 1 THEN
+                LEAVE get_cursor_colore_defecto;
+            END IF;
+            INSERT INTO colore (color, precio, disponible, id_productoe_codigo, id_productoe_id_cliente)
+            VALUES (colorp, preciop, disponiblep, id_productoe_codigop, TELEFONO_CLIENTE); 
+        END LOOP;
+    CLOSE cursor_colore_defecto;
+    END $$
+DELIMITER ;;
+
+
 ------------------------------------------------------procedimiento----------------------------------------------------------
 
 
@@ -192,6 +243,7 @@ END IF;
 END
 
 $$
+DELIMITER ;;
 
 
 --------------------------------------------------------evento-----------------------------------------------------------------
