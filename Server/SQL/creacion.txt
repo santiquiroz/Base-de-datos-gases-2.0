@@ -167,7 +167,13 @@ PRIMARY KEY (consecutivo , nick)
 );
 
 ------------------------------------------------------triggers--------------------------------------------------------------
-
+DELIMITER $$
+CREATE OR REPLACE TRIGGER eliminar_clientes AFTER DELETE ON
+    cliente FOR EACH ROW
+BEGIN
+DELETE FROM clienteNuevo WHERE telefono = OLD.telefono;
+END $$
+DELIMITER ;;
 
 DELIMITER $$
 CREATE OR REPLACE TRIGGER actualizar_fechas_cliente AFTER INSERT ON
