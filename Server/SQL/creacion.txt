@@ -254,25 +254,24 @@ DELIMITER ;;
 
 ------------------------------------------------------procedimiento----------------------------------------------------------
 
-
 DELIMITER $$
 
-BEGIN
-DECLARE aux INT;
-CREATE OR REPLACE TABLE te_pasaste AS SELECT * FROM cliente WHERE ((fecha_ultimo_pedido IS NOT NULL)AND(SELECT DATEDIFF((SELECT CURDATE()),cliente.fecha_ultimo_pedido ))>(promedio_dias_pedido+(SELECT tiempo_de_gracia FROM static))AND(no_molestar = 0));
+CREATE OR REPLACE PROCEDURE procedimiento_actualizar_te_pasaste() 
+    BEGIN
+    DECLARE aux INT;
+    CREATE OR REPLACE TABLE te_pasaste AS SELECT * FROM cliente WHERE ((fecha_ultimo_pedido IS NOT NULL)AND(SELECT DATEDIFF((SELECT CURDATE()),cliente.fecha_ultimo_pedido ))>(promedio_dias_pedido+(SELECT tiempo_de_gracia FROM static))AND(no_molestar = 0));
 
-SELECT COUNT(*) INTO aux FROM te_pasaste;
+    SELECT COUNT(*) INTO aux FROM te_pasaste;
 
-IF aux = 0 THEN
-    UPDATE STATIC SET alerta_retencion = 0 WHERE 1;
-ELSE
-    UPDATE STATIC SET alerta_retencion = 1 WHERE 1;
-END IF;
-END
+    IF aux = 0 THEN
+        UPDATE STATIC SET alerta_retencion = 0 WHERE 1;
+    ELSE
+        UPDATE STATIC SET alerta_retencion = 1 WHERE 1;
+    END IF;
+    END
 
 $$
 DELIMITER ;;
-
 
 --------------------------------------------------------evento-----------------------------------------------------------------
 
