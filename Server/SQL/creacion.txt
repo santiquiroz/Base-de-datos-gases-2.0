@@ -272,6 +272,12 @@ CREATE OR REPLACE PROCEDURE procedimiento_actualizar_te_pasaste()
 
 $$
 DELIMITER ;;
+------------------------------------------------------nota--------------------------------------------
+al importar desde un archivo .sql puede corromper la tabla count, eso se corrige asi:
+
+mysql_upgrade --force -uroot -p
+
+y reiniciando el servicio de mysql
 
 --------------------------------------------------------evento-----------------------------------------------------------------
 
