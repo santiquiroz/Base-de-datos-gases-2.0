@@ -370,7 +370,7 @@ public class InfoPedido extends View implements IView{
 
         jLabel4.setText("Cliente");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
 
         jLabel29.setText("Bodega");
 
