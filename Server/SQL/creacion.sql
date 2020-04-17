@@ -1,5 +1,5 @@
------------------------------------------------------estructura-----------------------------------------------------------------
-CREATE   TABLE static (
+#-----------------------------------------------------estructura-----------------------------------------------------------------
+CREATE TABLE static (
 codigo VARCHAR(20) PRIMARY KEY,
 limPuntos VARCHAR(20),
 limPuntosAcomulables VARCHAR(20),
@@ -73,7 +73,7 @@ id_productoe_id_cliente VARCHAR(80) REFERENCES productoe(id_cliente),
 PRIMARY KEY(color,id_productoe_codigo,id_productoe_id_cliente) 
 );
 
-CREATE OR REPLACE TABLE productoepredeterminado(
+CREATE TABLE productoepredeterminado(
 codigo VARCHAR(80),
 nombre VARCHAR (80),
 peso VARCHAR(80) NOT NULL,
@@ -81,7 +81,7 @@ tipo VARCHAR(80) NOT NULL,
 PRIMARY KEY (codigo)
 );
 
-CREATE OR REPLACE  TABLE colorepredeterminado(
+CREATE TABLE colorepredeterminado(
 color VARCHAR(80),
 precio VARCHAR(80) NOT NULL,
 disponible VARCHAR (1),
@@ -89,7 +89,7 @@ id_productoe_codigo VARCHAR(80) REFERENCES productoe(codigo),
 PRIMARY KEY(color,id_productoe_codigo) 
 );
 
-CREATE   TABLE pedido (
+CREATE TABLE pedido (
 fecha VARCHAR(80) NOT NULL,
 numero VARCHAR(80) NOT NULL,
 PRIMARY KEY(fecha,numero),
@@ -110,7 +110,7 @@ bodega VARCHAR(80),
 horaRegistro VARCHAR(80)
 );
 
-CREATE   TABLE productoexpedido(
+CREATE TABLE productoexpedido(
 consecutivo VARCHAR(80),
 nombre VARCHAR (80),
 color VARCHAR(80) NOT NULL,
@@ -124,7 +124,7 @@ id_pedido_numero VARCHAR(80)REFERENCES pedido(numero) ON DELETE CASCADE,
 PRIMARY KEY (consecutivo,id_pedido_fecha,id_pedido_numero)
 );
 
-CREATE   TABLE productom(
+CREATE TABLE productom(
 codigo VARCHAR(80),
 nombre varchar(80),
 peso VARCHAR(80) NOT NULL,
@@ -133,7 +133,7 @@ id_municipio VARCHAR(80) REFERENCES municipio(nombre),
 PRIMARY KEY (id_municipio,codigo)
 );
 
-CREATE   TABLE colorm(
+CREATE TABLE colorm(
 color VARCHAR(80),
 precio VARCHAR(80) NOT NULL,
 disponible VARCHAR (1),
@@ -142,7 +142,7 @@ id_productom_id_municipio VARCHAR(80) REFERENCES productom(id_municipio),
 PRIMARY KEY (id_productom_id_municipio,id_productom_codigo,color)
 );
 
-CREATE   TABLE productomxpedido (
+CREATE TABLE productomxpedido (
 consecutivo VARCHAR(80),
 nombre VARCHAR (80),
 color VARCHAR(80) NOT NULL,
@@ -166,9 +166,9 @@ nick VARCHAR(80) REFERENCES usuario(nick),
 PRIMARY KEY (consecutivo , nick)
 );
 
-------------------------------------------------------triggers--------------------------------------------------------------
+#------------------------------------------------------triggers--------------------------------------------------------------
 DELIMITER $$
-CREATE OR REPLACE TRIGGER eliminar_clientes AFTER DELETE ON
+CREATE OR REPLACE TRIGGER  eliminar_clientes AFTER DELETE ON
     cliente FOR EACH ROW
 BEGIN
 DELETE FROM clienteNuevo WHERE telefono = OLD.telefono;
@@ -176,7 +176,7 @@ END $$
 DELIMITER ;;
 
 DELIMITER $$
-CREATE OR REPLACE TRIGGER actualizar_fechas_cliente AFTER INSERT ON
+CREATE OR REPLACE TRIGGER  actualizar_fechas_cliente AFTER INSERT ON
     pedido FOR EACH ROW
 BEGIN
     DECLARE
@@ -252,7 +252,7 @@ BEGIN
 END $$
 DELIMITER ;;
 
-------------------------------------------------------procedimiento----------------------------------------------------------
+#------------------------------------------------------procedimiento----------------------------------------------------------
 
 DELIMITER $$
 
@@ -272,14 +272,14 @@ CREATE OR REPLACE PROCEDURE procedimiento_actualizar_te_pasaste()
 
 $$
 DELIMITER ;;
-------------------------------------------------------nota--------------------------------------------
-al importar desde un archivo .sql puede corromper la tabla count, eso se corrige asi:
+#------------------------------------------------------nota--------------------------------------------
+#al importar desde un archivo .sql puede corromper la tabla count, eso se corrige asi:
 
-mysql_upgrade --force -uroot -p
+#mysql_upgrade --force -uroot -p
 
-y reiniciando el servicio de mysql
+#y reiniciando el servicio de mysql
 
---------------------------------------------------------evento-----------------------------------------------------------------
+#--------------------------------------------------------evento-----------------------------------------------------------------
 
 
 SET GLOBAL event_scheduler := ON;
@@ -293,5 +293,5 @@ DO
 CALL procedimiento_actualizar_te_pasaste();
 
 
-------------------------------------------------------insercion-------------------------------------------------------------
+#------------------------------------------------------insercion-------------------------------------------------------------
 INSERT INTO static(codigo, limPuntos,limPuntosAcomulables,puntosxkilo,obsequio,puntos_descontados_por_obsequio,tiempo_de_gracia,tiempo_de_redencion ) VALUES( '1','4320','4320','80','','4320','5','100');
