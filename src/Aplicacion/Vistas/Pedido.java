@@ -657,7 +657,8 @@ public class Pedido extends View implements IView{
 
         jLabel29.setText("Estado");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "en cola", "en proceso", "pago", "fiado" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "en cola", "en proceso", "pago", "fiado", "consigno" }));
+        jComboBox3.setToolTipText("");
 
         jButton6.setText("x");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
